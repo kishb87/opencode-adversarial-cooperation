@@ -63,9 +63,9 @@ Use \`@\` to include file contents in prompts:
 - \`@.context/agent-spec.md\` - Architectural principles
 - \`@tasks/TDD_X.md\` - Current task file
 
-Use \`\`!\\`command\\`\`\` to execute commands and include output:
-- \`\`!\\`cat .tdd/state.json\\`\`\` - Read state file
-- \`\`!\\`ls tasks/TDD_*.md\\`\`\` - List task files
+Use command execution syntax to include output:
+- Read state file: cat .tdd/state.json
+- List task files: ls tasks/TDD_*.md
 
 ## State Management
 

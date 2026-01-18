@@ -6,7 +6,7 @@ import type { Shell } from "@opencode-ai/plugin"
  *
  * Read and update TDD workflow state
  */
-export const tddStateTool = ($: Shell, directory: string) =>
+export const tddStateTool = ($: Shell, directory: any) =>
   tool({
     description: `Read or update TDD workflow state.
 Can mark tasks as complete, update phase, or record Critic feedback.`,
@@ -29,7 +29,12 @@ Can mark tasks as complete, update phase, or record Critic feedback.`,
     },
     async execute(args) {
       const { action, taskId, phase, feedback } = args
-      const statePath = `${directory}/.tdd/state.json`
+
+      // Handle directory in various formats
+      const dir = typeof directory === "string"
+        ? directory
+        : (directory?.path || process.cwd())
+      const statePath = `${dir}/.tdd/state.json`
 
       try {
         // Read current state

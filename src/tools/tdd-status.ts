@@ -21,7 +21,7 @@ interface TDDState {
  *
  * Reports current TDD workflow progress and state
  */
-export const tddStatusTool = ($: Shell, directory: string) =>
+export const tddStatusTool = ($: Shell, directory: any) =>
   tool({
     description: `Check TDD workflow progress and current state.
 Shows completed tasks, current task, and next steps.`,
@@ -38,9 +38,14 @@ Shows completed tasks, current task, and next steps.`,
     async execute(args) {
       const { verbose = false, json = false } = args
 
+      // Handle directory in various formats
+      const dir = typeof directory === "string"
+        ? directory
+        : (directory?.path || process.cwd())
+
       try {
         // Read state file
-        const stateContent = await $`cat ${directory}/.tdd/state.json`.text()
+        const stateContent = await $`cat ${dir}/.tdd/state.json`.text()
         const state: TDDState = JSON.parse(stateContent)
 
         if (json) {
@@ -50,7 +55,7 @@ Shows completed tasks, current task, and next steps.`,
         // Count task files
         let taskFiles: string[] = []
         try {
-          const taskList = await $`ls ${directory}/tasks/TDD_*.md 2>/dev/null`.text()
+          const taskList = await $`ls ${dir}/tasks/TDD_*.md 2>/dev/null`.text()
           taskFiles = taskList.trim().split("\n").filter(Boolean)
         } catch {
           // No task files yet
@@ -94,7 +99,7 @@ ${state.last_critic_feedback}
 
         if (verbose && state.current_task) {
           try {
-            const taskContent = await $`cat ${directory}/tasks/${state.current_task}.md`.text()
+            const taskContent = await $`cat ${dir}/tasks/${state.current_task}.md`.text()
             output += `
 ## Current Task Content
 

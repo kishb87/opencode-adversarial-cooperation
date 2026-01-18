@@ -11,10 +11,25 @@ import { TDDConfigSchema, type TDDConfig, defaultConfig } from "./schema"
  * 3. ~/.config/opencode/opencode-tdd.json
  * 4. Default config
  */
-export async function loadConfig(projectDir: string): Promise<TDDConfig> {
+export async function loadConfig(projectDir: any): Promise<TDDConfig> {
+  // Handle directory in various formats
+  let dirPath: string
+
+  if (typeof projectDir === "string") {
+    dirPath = projectDir
+  } else if (projectDir && typeof projectDir === "object" && projectDir.path) {
+    dirPath = projectDir.path
+  } else if (projectDir && typeof projectDir === "object" && projectDir.toString) {
+    // Fallback: try toString() in case it's a path-like object
+    dirPath = projectDir.toString()
+  } else {
+    // Last resort: use current working directory
+    dirPath = process.cwd()
+  }
+
   const configPaths = [
-    join(projectDir, "opencode-tdd.json"),
-    join(projectDir, ".opencode", "opencode-tdd.json"),
+    join(dirPath, "opencode-tdd.json"),
+    join(dirPath, ".opencode", "opencode-tdd.json"),
     join(process.env.HOME || "~", ".config", "opencode", "opencode-tdd.json"),
   ]
 

@@ -16,7 +16,7 @@ interface TDDState {
  *
  * Determines and returns the next task to work on
  */
-export const tddNextTool = ($: Shell, directory: string) =>
+export const tddNextTool = ($: Shell, directory: any) =>
   tool({
     description: `Get the next TDD task to work on.
 Returns task details including test scope and existing code context.
@@ -30,18 +30,23 @@ Updates state to mark task as current.`,
     async execute(args) {
       const { peek = false } = args
 
+      // Handle directory in various formats
+      const dir = typeof directory === "string"
+        ? directory
+        : (directory?.path || process.cwd())
+
       try {
         // Read current state
-        const stateContent = await $`cat ${directory}/.tdd/state.json`.text()
+        const stateContent = await $`cat ${dir}/.tdd/state.json`.text()
         const state: TDDState = JSON.parse(stateContent)
 
         // Get list of task files
         let taskFiles: string[] = []
         try {
-          const taskList = await $`ls ${directory}/tasks/TDD_*.md 2>/dev/null | sort -V`.text()
+          const taskList = await $`ls ${dir}/tasks/TDD_*.md 2>/dev/null | sort -V`.text()
           taskFiles = taskList.trim().split("\n").filter(Boolean)
         } catch {
-          return `❌ No task files found in ${directory}/tasks/
+          return `❌ No task files found in ${dir}/tasks/
 
 Generate tasks first:
 1. Run \`/architect-full "Your project description"\` to generate all documents
@@ -50,7 +55,7 @@ Generate tasks first:
         }
 
         if (taskFiles.length === 0) {
-          return `❌ No task files found in ${directory}/tasks/
+          return `❌ No task files found in ${dir}/tasks/
 
 Create TDD task files (TDD_1.md, TDD_2.md, etc.) to begin the workflow.`
         }
@@ -100,7 +105,7 @@ npm test
             current_attempt: state.current_task === nextTaskId ? state.current_attempt + 1 : 1,
             updated_at: new Date().toISOString(),
           }
-          await $`echo ${JSON.stringify(newState, null, 2)} > ${directory}/.tdd/state.json`
+          await $`echo ${JSON.stringify(newState, null, 2)} > ${dir}/.tdd/state.json`
         }
 
         // Parse frontmatter for summary

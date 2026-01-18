@@ -4,24 +4,22 @@
   "description": "TDD Actor-Critic workflow system for OpenCode - structured test-driven development with AI agents",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/index.mjs",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     }
   },
   "files": [
     "dist",
     "commands",
-    "skills",
     "README.md",
+    "INSTALLATION.md",
     "LICENSE"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts --clean",
-    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "build": "tsup src/index.ts --format cjs,esm --clean",
+    "dev": "tsup src/index.ts --format cjs,esm --watch",
     "test": "bun test",
     "lint": "eslint src --ext .ts",
     "lint:fix": "eslint src --ext .ts --fix",

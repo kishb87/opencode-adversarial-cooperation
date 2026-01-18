@@ -9,7 +9,7 @@ import type { Shell } from "@opencode-ai/plugin"
  * - .tdd/ - Workflow state (gitignored)
  * - tasks/ - Individual TDD task files
  */
-export const tddInitTool = ($: Shell, directory: string) =>
+export const tddInitTool = ($: Shell, directory: any) =>
   tool({
     description: `Initialize TDD project structure with .context/, .tdd/, and tasks/ directories.
 Creates initial state.json for workflow tracking.
@@ -27,21 +27,26 @@ Safe to run multiple times - won't overwrite existing files.`,
     async execute(args) {
       const { projectType = "node", force = false } = args
 
+      // Handle directory in various formats
+      const dir = typeof directory === "string"
+        ? directory
+        : (directory?.path || process.cwd())
+
       try {
         // Create directories
-        await $`mkdir -p ${directory}/.context`
-        await $`mkdir -p ${directory}/.tdd`
-        await $`mkdir -p ${directory}/tasks`
+        await $`mkdir -p ${dir}/.context`
+        await $`mkdir -p ${dir}/.tdd`
+        await $`mkdir -p ${dir}/tasks`
 
         // Add .tdd to .gitignore if not already there
         try {
-          const gitignore = await $`cat ${directory}/.gitignore 2>/dev/null`.text()
+          const gitignore = await $`cat ${dir}/.gitignore 2>/dev/null`.text()
           if (!gitignore.includes(".tdd/")) {
-            await $`echo "\n# TDD workflow state (auto-generated)\n.tdd/" >> ${directory}/.gitignore`
+            await $`echo "\n# TDD workflow state (auto-generated)\n.tdd/" >> ${dir}/.gitignore`
           }
         } catch {
           // No .gitignore exists, create one
-          await $`echo "# TDD workflow state (auto-generated)\n.tdd/" > ${directory}/.gitignore`
+          await $`echo "# TDD workflow state (auto-generated)\n.tdd/" > ${dir}/.gitignore`
         }
 
         // Determine test command based on project type
@@ -56,7 +61,7 @@ Safe to run multiple times - won't overwrite existing files.`,
         // Check if state already exists
         let stateExists = false
         try {
-          await $`test -f ${directory}/.tdd/state.json`
+          await $`test -f ${dir}/.tdd/state.json`
           stateExists = true
         } catch {
           stateExists = false
@@ -91,14 +96,14 @@ Run \`tdd_status\` to check current progress.`
           updated_at: new Date().toISOString(),
         }
 
-        await $`echo ${JSON.stringify(initialState, null, 2)} > ${directory}/.tdd/state.json`
+        await $`echo ${JSON.stringify(initialState, null, 2)} > ${dir}/.tdd/state.json`
 
         // Create test mapping file
         const testMapping = {
           version: "1.0.0",
           mappings: {},
         }
-        await $`echo ${JSON.stringify(testMapping, null, 2)} > ${directory}/.tdd/test-mapping.json`
+        await $`echo ${JSON.stringify(testMapping, null, 2)} > ${dir}/.tdd/test-mapping.json`
 
         // Create placeholder files in .context if they don't exist
         const contextFiles = [
@@ -110,11 +115,11 @@ Run \`tdd_status\` to check current progress.`
 
         for (const file of contextFiles) {
           try {
-            await $`test -f ${directory}/.context/${file.name}`
+            await $`test -f ${dir}/.context/${file.name}`
             // File exists, don't overwrite
           } catch {
             // File doesn't exist, create placeholder
-            await $`echo ${file.content} > ${directory}/.context/${file.name}`
+            await $`echo ${file.content} > ${dir}/.context/${file.name}`
           }
         }
 
@@ -123,7 +128,7 @@ Run \`tdd_status\` to check current progress.`
 ## Created Structure
 
 \`\`\`
-${directory}/
+${dir}/
 ├── .context/
 │   ├── prd.md          # Product requirements
 │   ├── spec.md         # Technical specification

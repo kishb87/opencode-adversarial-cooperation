@@ -37,18 +37,18 @@ export const TDDPlugin: Plugin = async (ctx) => {
   const config = await loadConfig(directory)
 
   // Log plugin initialization
-  await client.app.log({
-    service: "opencode-tdd",
-    level: "info",
-    message: "TDD Plugin initialized",
-    extra: {
-      directory,
-      worktree,
-      config: {
-        features: config.features,
-      },
-    },
-  })
+  // Note: Logging temporarily disabled due to type issues with @opencode-ai/plugin peer dependency
+  // await client.app.log({
+  //   level: "info",
+  //   message: "TDD Plugin initialized",
+  //   data: {
+  //     directory,
+  //     worktree,
+  //     config: {
+  //       features: config.features,
+  //     },
+  //   },
+  // })
 
   return {
     // =========================================
@@ -128,20 +128,20 @@ ${state.last_critic_feedback || "None"}
     // =========================================
     "tool.execute.after": async (input, output) => {
       // Track test command results
-      if (
-        input.tool === "bash" &&
-        config.features?.testTracking !== false
-      ) {
-        const command = output.args?.command as string
-        if (command?.includes("test") || command?.includes("jest") || command?.includes("vitest")) {
-          await client.app.log({
-            service: "opencode-tdd",
-            level: "debug",
-            message: "Test command executed",
-            extra: { command },
-          })
-        }
-      }
+      // Note: Logging temporarily disabled due to type issues
+      // if (
+      //   input.tool === "bash" &&
+      //   config.features?.testTracking !== false
+      // ) {
+      //   const command = (output as any).args?.command as string
+      //   if (command?.includes("test") || command?.includes("jest") || command?.includes("vitest")) {
+      //     await client.app.log({
+      //       level: "debug",
+      //       message: "Test command executed",
+      //       data: { command },
+      //     })
+      //   }
+      // }
     },
   }
 }
