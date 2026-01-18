@@ -14,14 +14,26 @@ export const TDDConfigSchema = z.object({
   // =========================================
   models: z
     .object({
-      /** Model for Actor agent (implements tasks) */
-      actor: z.string().default("anthropic/claude-sonnet-4-20250514"),
-      /** Model for Critic agent (validates tasks) */
-      critic: z.string().default("anthropic/claude-sonnet-4-20250514"),
-      /** Model for Orchestrator agent (coordinates workflow) */
-      orchestrator: z.string().default("anthropic/claude-sonnet-4-20250514"),
-      /** Model for Architect agent (generates documents) */
-      architect: z.string().default("anthropic/claude-sonnet-4-20250514"),
+      /**
+       * Model for Actor agent (implements tasks)
+       * If not specified, uses the current session model
+       */
+      actor: z.string().optional(),
+      /**
+       * Model for Critic agent (validates tasks)
+       * If not specified, uses the current session model
+       */
+      critic: z.string().optional(),
+      /**
+       * Model for Orchestrator agent (coordinates workflow)
+       * If not specified, uses the current session model
+       */
+      orchestrator: z.string().optional(),
+      /**
+       * Model for Architect agent (generates documents)
+       * If not specified, uses the current session model
+       */
+      architect: z.string().optional(),
     })
     .default({}),
 

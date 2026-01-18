@@ -18,7 +18,7 @@ import type { TDDConfig } from "../config/schema"
 export const architectAgent = (config: TDDConfig) => ({
   description: "Document generator - creates comprehensive PRD, spec, tests, and task breakdown",
   mode: "primary" as const,
-  model: config.models?.architect || "anthropic/claude-sonnet-4-20250514",
+  model: config.models?.architect, // undefined = use session model
   temperature: 0.3,
   tools: {
     bash: true,

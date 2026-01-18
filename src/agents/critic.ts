@@ -17,7 +17,7 @@ import type { TDDConfig } from "../config/schema"
 export const criticAgent = (config: TDDConfig) => ({
   description: "TDD validator - validates implementations with fresh context and scoped validation",
   mode: "subagent" as const,
-  model: config.models?.critic || "anthropic/claude-sonnet-4-20250514",
+  model: config.models?.critic, // undefined = use session model
   temperature: 0.1,
   tools: {
     bash: true,

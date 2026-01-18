@@ -509,7 +509,8 @@ Make sure TDD is initialized: \`tdd_init\``;
 var actorAgent = (config) => ({
   description: "TDD implementer - implements one task per invocation following Red\u2192Green\u2192Refactor",
   mode: "subagent",
-  model: config.models?.actor || "anthropic/claude-sonnet-4-20250514",
+  model: config.models?.actor,
+  // undefined = use session model
   temperature: 0.4,
   tools: {
     bash: true,
@@ -778,7 +779,8 @@ ${config.prompts?.actorAppend || ""}
 var criticAgent = (config) => ({
   description: "TDD validator - validates implementations with fresh context and scoped validation",
   mode: "subagent",
-  model: config.models?.critic || "anthropic/claude-sonnet-4-20250514",
+  model: config.models?.critic,
+  // undefined = use session model
   temperature: 0.1,
   tools: {
     bash: true,
@@ -989,7 +991,8 @@ ${config.prompts?.criticAppend || ""}
 var orchestratorAgent = (config) => ({
   description: "TDD workflow coordinator - manages task progression and invokes Actor/Critic agents",
   mode: "primary",
-  model: config.models?.orchestrator || "anthropic/claude-sonnet-4-20250514",
+  model: config.models?.orchestrator,
+  // undefined = use session model
   temperature: 0.2,
   tools: {
     bash: true,
@@ -1267,7 +1270,8 @@ ${config.prompts?.orchestratorAppend || ""}
 var architectAgent = (config) => ({
   description: "Document generator - creates comprehensive PRD, spec, tests, and task breakdown",
   mode: "primary",
-  model: config.models?.architect || "anthropic/claude-sonnet-4-20250514",
+  model: config.models?.architect,
+  // undefined = use session model
   temperature: 0.3,
   tools: {
     bash: true,
@@ -1837,14 +1841,26 @@ var TDDConfigSchema = z.object({
   // AGENT MODEL OVERRIDES
   // =========================================
   models: z.object({
-    /** Model for Actor agent (implements tasks) */
-    actor: z.string().default("anthropic/claude-sonnet-4-20250514"),
-    /** Model for Critic agent (validates tasks) */
-    critic: z.string().default("anthropic/claude-sonnet-4-20250514"),
-    /** Model for Orchestrator agent (coordinates workflow) */
-    orchestrator: z.string().default("anthropic/claude-sonnet-4-20250514"),
-    /** Model for Architect agent (generates documents) */
-    architect: z.string().default("anthropic/claude-sonnet-4-20250514")
+    /**
+     * Model for Actor agent (implements tasks)
+     * If not specified, uses the current session model
+     */
+    actor: z.string().optional(),
+    /**
+     * Model for Critic agent (validates tasks)
+     * If not specified, uses the current session model
+     */
+    critic: z.string().optional(),
+    /**
+     * Model for Orchestrator agent (coordinates workflow)
+     * If not specified, uses the current session model
+     */
+    orchestrator: z.string().optional(),
+    /**
+     * Model for Architect agent (generates documents)
+     * If not specified, uses the current session model
+     */
+    architect: z.string().optional()
   }).default({}),
   // =========================================
   // WORKFLOW SETTINGS

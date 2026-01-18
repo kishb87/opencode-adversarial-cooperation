@@ -17,7 +17,7 @@ import type { TDDConfig } from "../config/schema"
 export const orchestratorAgent = (config: TDDConfig) => ({
   description: "TDD workflow coordinator - manages task progression and invokes Actor/Critic agents",
   mode: "primary" as const,
-  model: config.models?.orchestrator || "anthropic/claude-sonnet-4-20250514",
+  model: config.models?.orchestrator, // undefined = use session model
   temperature: 0.2,
   tools: {
     bash: true,

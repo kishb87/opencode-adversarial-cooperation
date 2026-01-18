@@ -16,7 +16,7 @@ import type { TDDConfig } from "../config/schema"
 export const actorAgent = (config: TDDConfig) => ({
   description: "TDD implementer - implements one task per invocation following Red→Green→Refactor",
   mode: "subagent" as const,
-  model: config.models?.actor || "anthropic/claude-sonnet-4-20250514",
+  model: config.models?.actor, // undefined = use session model
   temperature: 0.4,
   tools: {
     bash: true,
