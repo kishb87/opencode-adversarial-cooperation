@@ -29,7 +29,7 @@ Reference with: `@.context/prd.md`, `@.context/spec.md`, `@.context/test.md`, `@
 
 ## Task File Format
 
-Each task file must have complete frontmatter:
+Each task file must have complete frontmatter with implementation guidance:
 
 ```markdown
 ---
@@ -56,21 +56,44 @@ Clear statement of what this task accomplishes.
 2. Another requirement
 3. Edge cases to handle
 
+## Implementation Guidance
+
+**From research** (see `.context/research.md#implementation-patterns`):
+
+**Approach**: [How this is typically implemented based on research]
+
+**Key Steps**:
+1. [Step 1 from research]
+2. [Step 2 from research]
+3. [Step 3 from research]
+
+**Code Pattern** (from research):
+```[language]
+// Example pattern from research
+[brief code example showing the approach]
+```
+
+**Common Gotchas** (from research):
+- [Gotcha 1 to avoid]
+- [Gotcha 2 to avoid]
+
 ## Test-Driven Approach
 1. Write failing test for X
-2. Implement X to make test pass
+2. Implement X to make test pass (following pattern from research)
 3. Write test for Y
-4. Implement Y
+4. Implement Y (following pattern from research)
 5. Refactor
 
 ## Acceptance Criteria
 - [ ] Specific criterion with test reference
+- [ ] Follows implementation pattern from research
 - [ ] Another criterion
 - [ ] Edge case handled
 
 ## Reference Documentation
-- See `.context/spec.md` section X for API design
-- See `.context/test.md` section Y for test patterns
+- See `.context/research.md#[topic]` for implementation patterns
+- See `.context/spec/` section X for API design
+- See `.context/test/` section Y for test patterns
 - See `.context/agent-spec.md` for architectural guidelines
 ```
 
@@ -100,12 +123,85 @@ TDD_008: Add email verification
 
 ## Process
 
-1. Read all context documents: `@.context/prd.md`, `@.context/spec.md`, `@.context/test.md`, `@.context/agent-spec.md`
-2. Identify major features from PRD
-3. Break down each feature into implementation tasks
-4. Order tasks by dependencies
-5. Create individual task files with complete frontmatter
-6. Ensure each task has clear test scope
+### Phase 1: Implementation Research (CRITICAL - Do This Before Creating Tasks)
+
+Before creating task files, research HOW to implement each major component.
+
+#### Step 1.1: Identify Implementation Topics
+
+Based on spec, identify what needs implementation research:
+- **For each major feature/component**: How is it typically implemented?
+- **For each library mentioned in spec**: What are the implementation patterns?
+- **For each integration point**: How do these pieces work together?
+
+**Examples**:
+- Spec mentions "JWT authentication" → Research: JWT implementation patterns, token validation
+- Spec mentions "WebSocket connections" → Research: WebSocket setup, connection management
+- Spec mentions "File upload handling" → Research: Multipart parsing, storage patterns
+- Spec mentions "Database migrations" → Research: Migration tools, rollback strategies
+
+#### Step 1.2: Spawn @researcher Agents in Parallel
+
+**IMPORTANT**: Spawn ALL researchers in PARALLEL (single message, multiple Task tool calls).
+
+For each implementation topic, invoke @researcher:
+- Prompt: "How to implement [feature] using [library from spec]. Context: [project summary]"
+- Focus on: Implementation patterns, code structure, common gotchas
+- Each researcher returns 50-150 lines of raw data
+
+**Example research topics**:
+- "How to implement JWT authentication with Passport.js in Express"
+- "How to set up WebSocket connections with Socket.IO"
+- "How to handle file uploads with Multer"
+- "How to structure database migrations with Drizzle ORM"
+
+#### Step 1.3: Collect Implementation Guidance
+
+Wait for all researchers to complete.
+
+You'll receive:
+- Context7 results (if available)
+- Official docs and current patterns
+- Common implementation approaches
+- Gotchas and best practices
+
+#### Step 1.4: Update or Append to research.md
+
+**If .context/research.md exists**:
+- Add "## Implementation Patterns" section
+- Synthesize research for each implementation topic
+
+**If .context/research.md doesn't exist yet**:
+- Create it with implementation research
+
+**Format**:
+```markdown
+## Implementation Patterns
+
+### [Feature 1] Implementation
+
+**Approach**: [How it's typically done]
+**Key Steps**: [1, 2, 3...]
+**Code Pattern**: [Brief example or reference]
+**Gotchas**: [Common mistakes to avoid]
+
+### [Feature 2] Implementation
+
+[Same structure]
+```
+
+### Phase 2: Create Task Files
+
+1. Read all context documents: `@.context/prd.md`, `@.context/spec/`, `@.context/test/`, `@.context/agent-spec.md`
+2. Read implementation research from `.context/research.md#implementation-patterns`
+3. Identify major features from PRD
+4. Break down each feature into implementation tasks
+5. Order tasks by dependencies
+6. Create individual task files with:
+   - Complete frontmatter
+   - Clear test scope
+   - **Implementation guidance from research**
+   - **Code patterns from research**
 7. Update `.tdd/state.json` with total task count
 
 ## State File Update

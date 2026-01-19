@@ -1813,12 +1813,22 @@ Before completing, validate each document:
 - [ ] Patterns and conventions documented
 - [ ] Error handling philosophy defined
 
-### tasks.md
-- [ ] Has ${config.documents?.minTasksLines || 500}+ lines
-- [ ] Each task has full frontmatter
-- [ ] test_scope defined for each task
-- [ ] existing_code_context included
-- [ ] Logical dependency order
+### tasks/ folder (Individual task files with implementation research)
+- [ ] Implementation research completed BEFORE creating tasks
+  - [ ] Major implementation topics identified from spec
+  - [ ] @researcher agents spawned in PARALLEL for each topic
+  - [ ] .context/research.md updated with "Implementation Patterns" section
+- [ ] Individual task files created: tasks/TDD_001.md, tasks/TDD_002.md, etc.
+- [ ] Each task file has:
+  - [ ] Complete frontmatter (test_scope, dependencies, existing_code_context)
+  - [ ] Implementation Guidance section (from research)
+  - [ ] Code patterns from research
+  - [ ] Common gotchas from research
+  - [ ] References to research.md sections
+- [ ] Tasks are logically ordered by dependencies
+- [ ] Minimum 10 tasks for typical project (adjust based on scope)
+- [ ] Each task is focused and testable
+- [ ] .tdd/state.json updated with total_tasks count
 \`\`\`
 
 ## Document Templates
@@ -2412,9 +2422,103 @@ To find test documentation:
 
 ## Generating Tasks
 
-When creating tasks.md, ensure each task has:
+**\u{1F6A8} CRITICAL - RESEARCH IMPLEMENTATION BEFORE CREATING TASKS \u{1F6A8}**
 
-\`\`\`yaml
+Tasks are most valuable when they include HOW to implement, not just WHAT to implement.
+
+**The Process**:
+1. **Research Phase**: Spawn @researcher agents IN PARALLEL to look up implementation patterns
+2. **Synthesis**: Update research.md with implementation guidance
+3. **Task Creation**: Create task files that reference research findings
+
+**Why This Matters**:
+- Actors need implementation guidance to write code
+- Research shows best practices and common patterns
+- Prevents actors from guessing or making mistakes
+- Provides code examples to follow
+
+### Phase 1: Implementation Research
+
+**\u{1F511} KEY: Spawn Researchers in PARALLEL**
+
+When you have 5 implementation topics to research, make ONE message with 5 Task tool calls.
+- \u274C **WRONG**: Research topic 1, wait, research topic 2, wait... (slow!)
+- \u2705 **CORRECT**: Spawn 5 researchers in one message (all run in parallel, fast!)
+
+Before creating tasks, you MUST research HOW to implement major components:
+
+#### Step 1.1: Identify Implementation Topics
+
+From spec, identify what needs implementation research:
+- Major features (e.g., "JWT authentication", "File upload handling")
+- Integration points (e.g., "Database connections", "WebSocket setup")
+- Complex operations (e.g., "Real-time updates", "Background jobs")
+
+**Don't research**:
+- Simple CRUD operations (standard patterns)
+- Basic utilities (obvious implementations)
+
+#### Step 1.2: Spawn @researcher Agents in Parallel
+
+**IMPORTANT**: Spawn ALL researchers in PARALLEL (single message, multiple Task tool calls).
+
+For each implementation topic:
+\`\`\`
+Task tool:
+  subagent_type: "researcher"
+  prompt: "How to implement [feature] using [library from spec]. Implementation patterns, code structure, common gotchas."
+\`\`\`
+
+**Example topics**:
+- "How to implement JWT authentication with Passport.js in Express"
+- "How to set up real-time updates with Socket.IO"
+- "How to handle file uploads with Multer and S3"
+- "How to implement database migrations with Drizzle ORM"
+
+#### Step 1.3: Collect and Synthesize Research
+
+Wait for all researchers (1-2 minutes).
+
+Update \`.context/research.md\` with "## Implementation Patterns" section:
+
+\`\`\`markdown
+## Implementation Patterns
+
+### JWT Authentication Implementation
+
+**Approach**: Use Passport.js JWT strategy with Bearer tokens
+**Key Steps**:
+1. Configure Passport JWT strategy with secret
+2. Create middleware to extract token from Authorization header
+3. Verify token and attach user to request object
+
+**Code Pattern**:
+\`\`\`javascript
+passport.use(new JwtStrategy({
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET
+}, async (payload, done) => {
+  const user = await User.findById(payload.sub);
+  return done(null, user);
+}));
+\`\`\`
+
+**Common Gotchas**:
+- Token expiration must be handled on frontend
+- Secret must be strong and never committed
+- Use refresh tokens for long-lived sessions
+\`\`\`
+
+[Repeat for each implementation topic]
+\`\`\`
+
+### Phase 2: Create Task Files
+
+Create individual task files in \`tasks/\` directory with implementation guidance:
+
+**Task File Template**:
+
+\`\`\`markdown
 ---
 task_id: "TDD_4"
 title: "Implement Auth Service"
@@ -2445,36 +2549,100 @@ existing_code_context:
     - "Throw typed errors from shared/errors"
 ---
 
-## Task Description
+# Task: Implement Auth Service
 
-[Detailed description of what needs to be implemented]
+## Objective
+Create authentication service with registration, login, and token validation.
 
 ## Requirements
+1. User registration with password hashing
+2. Login with JWT token generation
+3. Token validation and user lookup
 
-1. [Specific requirement]
-2. [Specific requirement]
+## Implementation Guidance
+
+**From research** (see \`.context/research.md#jwt-authentication-implementation\`):
+
+**Approach**: Use Passport.js JWT strategy with bcrypt for password hashing
+
+**Key Steps**:
+1. Configure Passport JWT strategy with secret from environment
+2. Create registration method with bcrypt password hashing (10+ rounds)
+3. Create login method that generates JWT token
+4. Create token validation middleware
+
+**Code Pattern**:
+\`\`\`javascript
+// From research - JWT token generation pattern
+const token = jwt.sign(
+  { sub: user.id, email: user.email },
+  process.env.JWT_SECRET,
+  { expiresIn: '7d' }
+);
+\`\`\`
+
+**Common Gotchas** (from research):
+- Use bcrypt with 10+ rounds (not 8, security risk)
+- JWT_SECRET must be strong (32+ characters)
+- Don't put sensitive data in JWT payload (it's not encrypted)
+- Handle token expiration gracefully
+
+## Test-Driven Approach
+1. Write failing test for user registration with password hashing
+2. Implement registration method following research pattern
+3. Write failing test for login with token generation
+4. Implement login following JWT pattern from research
+5. Write test for token validation
+6. Implement validation middleware
+7. Refactor
 
 ## Test Cases to Implement
 
 \`\`\`typescript
 describe('AuthService', () => {
   describe('register', () => {
-    it('should create a new user with hashed password', async () => {
+    it('should create a new user with bcrypt hashed password', async () => {
+      // Test implementation - verify bcrypt.hash was called
+    });
+
+    it('should throw if email already exists', async () => {
       // Test implementation
     });
-    
-    it('should throw if email already exists', async () => {
+  });
+
+  describe('login', () => {
+    it('should return JWT token for valid credentials', async () => {
+      // Test implementation - verify token structure
+    });
+
+    it('should throw for invalid credentials', async () => {
       // Test implementation
     });
   });
 });
 \`\`\`
 
-## Implementation Notes
+## Acceptance Criteria
+- [ ] Password hashed with bcrypt (10+ rounds from research)
+- [ ] JWT token generated with proper expiration
+- [ ] Follows Passport.js pattern from research
+- [ ] All test cases pass
+- [ ] No sensitive data in JWT payload (research gotcha)
 
-- [Specific implementation detail]
-- [Specific implementation detail]
+## Reference Documentation
+- See \`.context/research.md#jwt-authentication-implementation\` for patterns
+- See \`.context/spec/\` for API contracts
+- See \`.context/test/\` for test patterns
+- See \`.context/agent-spec.md\` for architectural guidelines
 \`\`\`
+
+**CRITICAL - Task File Quality**:
+- \u2705 Include implementation guidance from research
+- \u2705 Reference specific sections in research.md
+- \u2705 Include code patterns from research
+- \u2705 List common gotchas from research
+- \u2705 Each task is self-contained with all context
+- \u274C NO vague "implement this" without guidance
 
 ## Using the Todo Tool
 
