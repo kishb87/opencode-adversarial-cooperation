@@ -14,6 +14,7 @@
     "dist",
     "commands",
     "docs",
+    "assets",
     "README.md",
     "LICENSE"
   ],

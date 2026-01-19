@@ -1,3 +1,9 @@
+<div align="center">
+  <img src="./assets/banner.png" alt="OpenCode TDD Banner" width="100%">
+</div>
+
+<br>
+
 # OpenCode TDD
 
 A comprehensive Test-Driven Development workflow system for [OpenCode](https://opencode.ai) that uses specialized AI agents to guide you from requirements to implementation.
