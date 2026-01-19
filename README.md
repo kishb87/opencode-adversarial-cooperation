@@ -664,7 +664,6 @@ export const authenticateJWT = async (req, res, next) => {
     return res.status(401).json({ error: 'Invalid token' })
   }
 }
-```
 
 **Common Gotchas** (from research):
 - Don't forget to handle missing Authorization header
