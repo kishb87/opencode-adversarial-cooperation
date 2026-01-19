@@ -16,17 +16,22 @@ Reference the PRD with: `@.context/prd.md`
 
 ## Requirements
 
-- Minimum 500 lines (target 800-1200)
-- Complete database schemas with CREATE TABLE statements
+- **Minimum 1200 lines** (target 1500-3000+)
+- **EVERY implementation detail documented** - no shortcuts, no "..."
+- Complete database schemas with CREATE TABLE statements:
+  - EVERY column with type and constraints
+  - EVERY index and foreign key
 - Full API specifications with:
-  - Endpoint definitions
-  - Request/response types (TypeScript/JSON schema)
+  - EVERY endpoint fully documented (not "and 10 more endpoints")
+  - Complete request/response types (TypeScript/JSON schema)
+  - ALL validation rules
+  - ALL error codes
+  - Example requests and responses
   - Authentication/authorization requirements
-  - Error responses
 - Architecture diagrams (ASCII or Mermaid)
 - Complete file/folder structure
 - Technology stack with justifications
-- Data models and relationships
+- Data models and relationships (ALL fields, not "other fields...")
 - Security considerations
 - Performance requirements
 - Deployment architecture

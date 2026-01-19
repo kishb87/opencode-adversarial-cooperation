@@ -17,7 +17,7 @@ Reference with: `@.context/prd.md` and `@.context/spec.md`
 
 ## Requirements
 
-- Minimum 300 lines (target 400-600)
+- Minimum 500 lines (target 700-1200)
 - Complete, runnable test examples (not pseudocode)
 - Test coverage for:
   - **Unit tests** - Individual functions, components

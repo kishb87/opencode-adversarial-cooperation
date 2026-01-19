@@ -29,7 +29,7 @@ The Agent Spec provides **abstract architectural principles** that guide AI agen
 
 ## Requirements
 
-- Minimum 100 lines (target 150-250)
+- Minimum 150 lines (target 200-300)
 - Abstract principles only (no specific implementations)
 - Patterns and conventions to follow
 - Architectural guardrails

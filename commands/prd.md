@@ -9,7 +9,7 @@ Generate a comprehensive PRD for this project.
 
 ## Requirements
 
-- Minimum 200 lines (target 300-500)
+- Minimum 300 lines (target 400-700)
 - Complete user personas (at least 2-3)
 - All features with acceptance criteria
 - User flows documented

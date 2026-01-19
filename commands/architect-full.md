@@ -34,26 +34,28 @@ Before generating any documents, ask the user these questions:
 After gathering requirements, generate these documents in order:
 
 ### 1. PRD (.context/prd.md)
-- Minimum 200 lines
+- Minimum 300 lines (target 400-700)
 - Complete user personas
 - All features with acceptance criteria
 - No placeholders
 
 ### 2. Technical Spec (.context/spec.md)
-- Minimum 500 lines
-- Complete database schemas (CREATE TABLE)
-- Full API specifications with TypeScript types
+- **Minimum 1200 lines (target 1500-3000+)**
+- **EVERY implementation detail documented**
+- Complete database schemas (CREATE TABLE for EVERY table)
+- Full API specifications with TypeScript types (EVERY endpoint)
 - Architecture diagrams
 - File structure
+- **No "..." or "similar to above" shortcuts**
 
 ### 3. Test Spec (.context/test.md)
-- Minimum 300 lines
-- Complete, runnable test examples
+- Minimum 500 lines (target 700-1200)
+- Complete, runnable test examples (not pseudocode)
 - Unit, integration, E2E tests
 - Test helpers and fixtures
 
 ### 4. Agent Spec (.context/agent-spec.md)
-- Minimum 100 lines
+- Minimum 150 lines (target 200-300)
 - Abstract principles only
 - Patterns and conventions
 - No specific code paths
