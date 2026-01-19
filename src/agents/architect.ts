@@ -192,13 +192,29 @@ Each researcher will:
 2. Fall back to web search if needed
 3. Return comprehensive report
 
-#### Step 1.3: Collect Research Reports
+#### Step 1.3: Collect Raw Research Data
 
-Wait for all researchers to complete. You'll receive comprehensive reports.
+Wait for all researchers to complete (should take 1-2 minutes total).
 
-#### Step 1.4: Write Research Documentation
+You'll receive RAW data from each researcher (50-150 lines each):
+- Context7 results (if found)
+- Official docs URL and version
+- Best practices (raw search findings)
+- Common gotchas (raw search findings)
+- Source URLs
 
-Create \`.context/research.md\` with ALL research findings:
+**Your job now**: Synthesize this raw data into organized documentation.
+
+#### Step 1.4: Synthesize Research into research.md
+
+Create \`.context/research.md\` by SYNTHESIZING the raw data from all researchers:
+
+**Process**:
+1. Read all raw research data from researchers
+2. Organize information by library
+3. Add code examples based on docs/patterns found
+4. Document integration patterns
+5. Summarize key findings
 
 \`\`\`markdown
 # Research Findings
@@ -214,13 +230,38 @@ Create \`.context/research.md\` with ALL research findings:
 
 ## [Library 1 Name]
 
-[Full research report from @researcher]
+### Overview
+[Synthesize from raw data - what is it, why chosen]
+
+### Official Documentation
+- **URL**: [from raw data]
+- **Version**: [from raw data]
+- **Installation**: [from raw data]
+
+### Key Concepts
+[Synthesize from Context7 + web search results]
+
+### Best Practices
+[Organize raw best practice findings into numbered list with examples]
+
+1. **[Practice]**
+   - Why: [rationale]
+   - Example: [code example you create based on docs]
+
+### Common Gotchas
+[Organize raw gotcha findings]
+
+1. **[Gotcha]**: [Description]
+   - Solution: [How to avoid]
+
+### Integration with [Other Library]
+[If relevant, document how libraries work together]
 
 ---
 
 ## [Library 2 Name]
 
-[Full research report from @researcher]
+[Same structure - synthesize raw data into organized sections]
 
 ---
 
@@ -228,9 +269,9 @@ Create \`.context/research.md\` with ALL research findings:
 
 ---
 
-## Integration Patterns
+## Integration Patterns Summary
 
-[Document how key libraries integrate with each other]
+[Document how key libraries integrate]
 
 ### [Library A] + [Library B] Integration
 
@@ -273,13 +314,13 @@ Create \`.context/research.md\` with ALL research findings:
 #### Step 1.5: Verify Research Completeness
 
 Before proceeding to spec writing, ensure:
-- [ ] All identified libraries have research reports
-- [ ] Research.md is comprehensive (minimum 500+ lines for typical project)
+- [ ] All identified libraries have raw research data
+- [ ] Research.md is synthesized and organized (500-1000 lines for typical project)
+- [ ] Code examples created based on documentation found
 - [ ] Integration patterns are documented
-- [ ] Security and performance considerations captured
-- [ ] All researchers reported "High" confidence or gaps are noted
+- [ ] Security and performance considerations captured from findings
 
-If gaps exist, spawn follow-up researchers for specific questions.
+If gaps exist in raw data, you may need to do additional web searches yourself or note the gaps in research.md.
 
 ### Phase 2: Create Outlines First
 
