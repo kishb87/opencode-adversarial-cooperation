@@ -1,8 +1,8 @@
-# Multi-File Specification Structure
+# Multi-File Specification Structure (Numbered, Chunked)
 
 **Date**: 2026-01-18
 **Problem**: Single spec.md file (1500-3000+ lines) causes LLM timeouts
-**Solution**: Split spec into multiple focused files (200-800 lines each)
+**Solution**: Split spec into numbered chunk files (~500 lines each, unlimited files)
 
 ---
 
@@ -51,37 +51,34 @@ Total: 2000+ comprehensive lines across multiple files
 .context/
 ├── prd.md                      # Product Requirements
 ├── research.md                 # Library research findings
-├── spec/                       # Technical Specification (MULTI-FILE)
-│   ├── README.md              # Index, overview, quick reference (150-250 lines)
-│   ├── architecture.md        # System design, tech stack (200-400 lines)
-│   ├── database.md            # Schemas, migrations (200-500 lines)
-│   ├── api.md                 # All endpoints (400-800 lines)
-│   ├── types.md               # TypeScript interfaces (200-400 lines)
-│   ├── security.md            # Auth, security (200-400 lines)
-│   ├── file-structure.md      # Project organization (150-250 lines)
-│   ├── error-handling.md      # Errors, validation (200-300 lines)
-│   ├── performance.md         # Optimization (150-250 lines) [optional]
-│   └── deployment.md          # Infrastructure, CI/CD (150-250 lines) [optional]
+├── spec/                       # Technical Specification (NUMBERED CHUNKS)
+│   ├── README.md              # Topic roadmap (what will be covered)
+│   ├── 001.md                 # First topic chunk (~400-600 lines)
+│   ├── 002.md                 # Second topic chunk (~400-600 lines)
+│   ├── 003.md                 # Third topic chunk (~400-600 lines)
+│   ├── ...                    # As many files as needed
+│   ├── 012.md                 # Example: 12th file
+│   └── TOC.md                 # File→topic mapping (created last)
 ├── test.md                     # Test Specification
 └── agent-spec.md               # Agent Principles
 ```
 
-**Total spec lines**: 2000-3500+ across all files
+**Total spec lines**: Unlimited! (typically 2000-15000+ across all files)
 
 ---
 
 ## File Breakdown
 
-### 1. README.md (Index)
-**Purpose**: Entry point, table of contents, quick reference
-**Size**: 150-250 lines
+### 1. README.md (Topic Roadmap)
+**Purpose**: Entry point listing all topics to be covered
+**Size**: 150-300 lines
 
 **Contains**:
 - Project overview
-- Table of contents with links to other files
+- List of ALL topics that will be documented
 - Quick reference section (tech stack, DB, API base, auth method)
 - Link to research.md
-- Document status checklist
+- Note that TOC.md will show file→topic mapping
 
 **Example**:
 ```markdown
@@ -90,11 +87,17 @@ Total: 2000+ comprehensive lines across multiple files
 **Project**: REST API with Real-time Features
 **Tech Stack**: Fastify, Drizzle, PostgreSQL, Socket.IO
 
-## Table of Contents
-1. [Architecture](./architecture.md)
-2. [Database](./database.md)
-3. [API](./api.md)
-...
+## Overview
+[2-3 paragraphs]
+
+## Topics to Cover
+1. System Architecture
+2. Database Schema
+3. API Endpoints
+4. Authentication & Security
+5. Error Handling
+6. File Structure
+7. Deployment
 
 ## Quick Reference
 **Database**: PostgreSQL 16
@@ -102,123 +105,89 @@ Total: 2000+ comprehensive lines across multiple files
 **API Base**: /api/v1
 ```
 
-### 2. architecture.md (System Design)
-**Purpose**: High-level system design, tech stack decisions
-**Size**: 200-400 lines
+**IMPORTANT**: This is NOT a table of contents with file links - that comes later in TOC.md. This is a roadmap of what topics need documentation.
+
+### 2. Numbered Files (001.md, 002.md, 003.md, ...)
+**Purpose**: Cover each topic comprehensively in ~500 line chunks
+**Size**: ~400-600 lines per file (natural stopping points)
+
+**Characteristics**:
+- **Sequential**: Write 001.md, then 002.md, then 003.md, etc.
+- **Topic-focused**: Each file continues documenting topics from README roadmap
+- **Spans allowed**: Topics can span multiple files (API Endpoints might be 003.md through 007.md)
+- **Complete**: Each file is comprehensive for its chunk (no "..." or "similar to above")
+- **Unlimited**: As many files as needed to cover all topics
+
+**Example for Full-Stack Project** (12 files, 5,740 lines):
+- `001.md` - System Architecture (complete, 450 lines)
+- `002.md` - Database Schema Part 1: users, sessions tables (520 lines)
+- `003.md` - Database Schema Part 2: posts, comments tables (480 lines)
+- `004.md` - API Endpoints Part 1: auth endpoints (550 lines)
+- `005.md` - API Endpoints Part 2: user endpoints (530 lines)
+- `006.md` - API Endpoints Part 3: post endpoints (510 lines)
+- `007.md` - Frontend Components Part 1: layout, auth (490 lines)
+- `008.md` - Frontend Components Part 2: dashboard, forms (470 lines)
+- `009.md` - Authentication & Security (complete, 580 lines)
+- `010.md` - Error Handling (complete, 420 lines)
+- `011.md` - File Structure (complete, 380 lines)
+- `012.md` - Deployment (complete, 350 lines)
+
+**Example for Frontend-Only Project** (6 files, 2,490 lines):
+- `001.md` - Component Architecture (380 lines)
+- `002.md` - State Management with Redux (520 lines)
+- `003.md` - Routing & Navigation (410 lines)
+- `004.md` - API Integration Layer (450 lines)
+- `005.md` - Styling & Theming (390 lines)
+- `006.md` - File Structure (340 lines)
+
+**Each file contains**:
+- Topic heading (with continuation note if applicable)
+- Comprehensive documentation for that chunk
+- Complete code examples (no shortcuts)
+- References to research.md for library-specific patterns
+- Continuation note if topic continues to next file
+
+### 3. TOC.md (File→Topic Mapping)
+**Purpose**: Map which files contain which topics (created LAST)
+**Size**: 100-200 lines
 
 **Contains**:
-- System architecture diagram (ASCII or Mermaid)
-- Complete technology stack with rationale from research.md
-- Integration patterns (how libraries work together)
-- Architecture principles
-- Data flow diagrams
+- Clear mapping of topics to file ranges
+- Navigation instructions
+- Links to README.md
 
-**Example sections**:
-- System Architecture (diagram)
-- Technology Stack (all choices with research references)
-- Integration Patterns (Fastify + Drizzle setup code)
-- Architecture Principles (from agent-spec.md)
+**Example**:
+```markdown
+# Table of Contents
 
-### 3. database.md (Schemas)
-**Purpose**: Complete database schema definitions
-**Size**: 200-500 lines
+## File → Topic Mapping
 
-**Contains**:
-- Entity Relationship Diagram (ERD)
-- Complete CREATE TABLE for EVERY table
-- Every column with type, constraints, comments
-- Every index
-- Every foreign key relationship
-- Migration strategy
+### System Architecture
+- **001.md** - Complete
 
-**Critical**: No shortcuts like "and 5 more tables" - write them ALL
+### Database Schema
+- **002.md** - Users, sessions tables
+- **003.md** - Posts, comments tables
 
-### 4. api.md (Endpoints)
-**Purpose**: Complete API specification
-**Size**: 400-800 lines (largest file typically)
+### API Endpoints
+- **004.md** - Authentication endpoints
+- **005.md** - User management endpoints
+- **006.md** - Post and comment endpoints
 
-**Contains**:
-- Base URL and versioning
-- Authentication requirements
-- EVERY endpoint with:
-  - Description
-  - Full request type (all fields documented)
-  - Full response type (all fields documented)
-  - Validation rules
-  - All error codes
-  - Example request
-  - Example response
+### Frontend Components
+- **007.md** - Layout and auth components
+- **008.md** - Dashboard and forms
 
-**Critical**: Most likely to cause timeout in single-file approach, so this file is most important to split out
+[etc.]
 
-### 5. types.md (TypeScript Definitions)
-**Purpose**: All TypeScript interfaces, types, enums
-**Size**: 200-400 lines
+## Navigation
+To find documentation:
+1. Check this TOC for the file range
+2. Open the numbered files
+3. See README.md for topic overview
+```
 
-**Contains**:
-- All interfaces (every field documented)
-- All type aliases
-- All enums
-- Validation schemas (Zod, Yup, etc.)
-
-**No shortcuts**: Every field must be listed, no "extends BaseType" without showing what BaseType contains
-
-### 6. security.md (Auth & Security)
-**Purpose**: Authentication, authorization, security practices
-**Size**: 200-400 lines
-
-**Contains**:
-- Authentication flow (diagrams + code)
-- JWT token configuration
-- Password hashing (bcrypt configuration from research)
-- Authorization model (roles, permissions)
-- Security best practices from research.md
-- CORS configuration
-- Rate limiting
-- Input sanitization
-
-### 7. file-structure.md (Project Organization)
-**Purpose**: Complete project file/folder structure
-**Size**: 150-250 lines
-
-**Contains**:
-- Complete directory tree
-- Purpose for EVERY file and folder
-- Module organization patterns
-- Naming conventions
-
-### 8. error-handling.md (Errors)
-**Purpose**: Error codes, validation, error responses
-**Size**: 200-300 lines
-
-**Contains**:
-- ALL error codes enumerated (not "errors 001-050")
-- Error response format
-- Validation approach
-- Error handling middleware
-- Logging strategy
-
-### 9. performance.md (Optional)
-**Purpose**: Optimization and scaling
-**Size**: 150-250 lines
-
-**Contains**:
-- Caching strategy
-- Database optimization (indexes, queries)
-- Connection pooling
-- Load balancing
-- CDN setup (if applicable)
-
-### 10. deployment.md (Optional)
-**Purpose**: Infrastructure and CI/CD
-**Size**: 150-250 lines
-
-**Contains**:
-- Deployment architecture
-- CI/CD pipeline
-- Environment configuration
-- Monitoring and logging
-- Backup strategy
+**CRITICAL**: TOC.md is written LAST, after all numbered files are complete
 
 ---
 
@@ -228,18 +197,16 @@ Total: 2000+ comprehensive lines across multiple files
 
 The Architect writes files in this specific order:
 
-1. **README.md** (index first)
-2. **architecture.md** (high-level design)
-3. **database.md** (data model)
-4. **api.md** (endpoints)
-5. **types.md** (type definitions)
-6. **security.md** (auth and security)
-7. **file-structure.md** (project organization)
-8. **error-handling.md** (errors)
-9. **performance.md** (if applicable)
-10. **deployment.md** (if applicable)
+1. **README.md** (topic roadmap first)
+2. **001.md** (~500 lines covering first topic or part of first topic)
+3. **002.md** (~500 lines continuing or starting next topic)
+4. **003.md** (~500 lines continuing topics)
+5. **...** (as many numbered files as needed)
+6. **XXX.md** (final numbered file)
+7. **TOC.md** (file→topic mapping, written LAST)
 
 **Each file is written completely before moving to the next.**
+**Files are written sequentially until all topics from README are covered.**
 
 ### Example Architect Process
 
@@ -249,39 +216,61 @@ User: /tdd/spec "Build REST API with authentication"
 @architect:
   1. Does research (creates research.md)
   2. Creates .context/spec/ directory
-  3. Writes README.md
-     - Table of contents
+
+  3. Writes README.md (topic roadmap)
+     - Lists 6 topics: Architecture, Database, API, Security, Errors, File Structure
      - Quick reference
-     - Links to other files
-  4. Writes architecture.md
-     - System diagram
+     - Link to research.md
+
+  4. Writes 001.md (~450 lines)
+     - System Architecture (complete)
      - Tech stack from research
      - Integration patterns
-  5. Writes database.md
-     - ERD
-     - users table (complete CREATE TABLE)
-     - sessions table (complete CREATE TABLE)
-     - All indexes
-  6. Writes api.md
-     - POST /api/auth/register (complete spec)
-     - POST /api/auth/login (complete spec)
-     - POST /api/auth/logout (complete spec)
-     - [All other endpoints]
-  7. Writes types.md
-     - User interface (all fields)
-     - Session interface (all fields)
-     - Request/response types
-  8. Writes security.md
-     - JWT configuration
-     - bcrypt setup
-     - Auth flow
-  9. Writes file-structure.md
-     - Complete directory tree
-  10. Writes error-handling.md
-      - All error codes
-      - Error response format
 
-  ✅ Complete - no timeouts!
+  5. Writes 002.md (~520 lines)
+     - Database Schema Part 1
+     - ERD
+     - users table (complete CREATE TABLE with all columns, indexes)
+     - sessions table (complete CREATE TABLE)
+
+  6. Writes 003.md (~550 lines)
+     - API Endpoints Part 1
+     - POST /api/auth/register (complete spec with request/response/validation/errors/examples)
+     - POST /api/auth/login (complete spec)
+
+  7. Writes 004.md (~480 lines)
+     - API Endpoints Part 2
+     - POST /api/auth/logout (complete spec)
+     - GET /api/users/me (complete spec)
+     - PUT /api/users/me (complete spec)
+
+  8. Writes 005.md (~580 lines)
+     - Security & Authentication
+     - JWT configuration
+     - bcrypt setup (from research)
+     - Auth flow diagrams
+     - CORS, rate limiting
+
+  9. Writes 006.md (~420 lines)
+     - Error Handling
+     - All 25 error codes enumerated
+     - Error response format
+     - Validation approach
+
+  10. Writes 007.md (~380 lines)
+      - File Structure
+      - Complete directory tree
+      - Purpose for every file/folder
+
+  11. Writes TOC.md (mapping)
+      - 001: Architecture
+      - 002: Database Schema
+      - 003-004: API Endpoints
+      - 005: Security
+      - 006: Error Handling
+      - 007: File Structure
+
+  ✅ Complete - 7 files, 3,380 lines total, no timeouts!
 ```
 
 ---
@@ -290,33 +279,43 @@ User: /tdd/spec "Build REST API with authentication"
 
 ### Actor References
 
-When Actor implements a task, they can reference specific files:
+When Actor implements a task, they first check TOC.md to find relevant files:
 
 ```markdown
 ## Task: Implement User Registration
 
-### Relevant Specs
-@.context/spec/database.md#users - User table schema
-@.context/spec/api.md#post-apiauthregister - Registration endpoint
-@.context/spec/types.md#User - User interface
-@.context/spec/security.md#password-hashing - bcrypt setup
+### Finding Relevant Specs
+1. Check @.context/spec/TOC.md
+   - Database Schema: 002.md
+   - API Endpoints: 003-004.md
+   - Security: 005.md
+
+2. Read relevant files:
+@.context/spec/002.md#users - User table schema
+@.context/spec/003.md#post-apiauthregister - Registration endpoint
+@.context/spec/005.md#password-hashing - bcrypt setup
 ```
 
-**Benefit**: Actor only loads relevant sections, not entire 3000-line spec
+**Benefit**:
+- TOC.md shows exactly which files to read
+- Actor only loads 2-3 files instead of entire spec
+- Each file is ~500 lines (manageable context)
 
 ### Critic References
 
-When Critic validates, they reference specific sections:
+When Critic validates, they use TOC.md to find validation criteria:
 
 ```markdown
 ## Validation Context
 
-Checking implementation against:
-- @.context/spec/api.md#post-apiauthregister - Expected API contract
-- @.context/spec/security.md#password-hashing - Security requirements
+1. Check @.context/spec/TOC.md for relevant topics
+2. Read specific files:
+   - @.context/spec/003.md#post-apiauthregister - Expected API contract
+   - @.context/spec/005.md#password-hashing - Security requirements
+   - @.context/spec/006.md - Error codes to check
 ```
 
-**Benefit**: Focused validation against specific requirements
+**Benefit**: Focused validation against specific requirements, without loading entire spec
 
 ---
 
@@ -329,44 +328,50 @@ Checking implementation against:
 ├── spec.md  (1500-3000 lines, causes timeouts)
 ```
 
-### New Multi-File Approach
+### New Multi-File Approach (Numbered Chunks)
 
 ```
 .context/
 ├── spec/
 │   ├── README.md
-│   ├── architecture.md
-│   ├── database.md
-│   ├── api.md
-│   ├── types.md
-│   ├── security.md
-│   ├── file-structure.md
-│   └── error-handling.md
+│   ├── 001.md
+│   ├── 002.md
+│   ├── 003.md
+│   ├── 004.md
+│   ├── ...
+│   ├── 012.md
+│   └── TOC.md
 ```
 
 ### For Existing Projects
 
 If you have an existing `spec.md`, you can:
 
-1. Run `/tdd/spec` again - Architect will create spec/ folder
-2. Manually split spec.md into appropriate files
+1. Run `/tdd/spec` again - Architect will create spec/ folder with numbered files
+2. Manually split spec.md into numbered files with TOC.md
 3. Or keep spec.md and create spec/ for new work (both can coexist)
 
-**Actor/Critic work with both formats** - they can read `@.context/spec.md` or `@.context/spec/api.md`
+**Actor/Critic work with both formats** - they can read `@.context/spec.md` or `@.context/spec/001.md`
+
+**To manually convert**:
+1. Create README.md with topic list
+2. Split content into ~500 line chunks as 001.md, 002.md, etc.
+3. Create TOC.md mapping topics to files
 
 ---
 
 ## Benefits Summary
 
-| Aspect | Single File | Multi-File |
-|--------|-------------|------------|
-| **Timeouts** | ❌ Frequent at 1500+ lines | ✅ None (each file ~200-800) |
+| Aspect | Single File | Numbered Chunks |
+|--------|-------------|-----------------|
+| **Timeouts** | ❌ Frequent at 1500+ lines | ✅ None (each file ~500 lines) |
 | **Recovery** | ❌ Lose everything on timeout | ✅ Keep completed files |
-| **Organization** | ❌ Hard to navigate 3000 lines | ✅ Clear sections |
-| **Updates** | ❌ Rewrite entire file | ✅ Update just one section |
-| **References** | ❌ Load entire spec | ✅ Load specific section |
-| **Parallel** | ❌ Must write sequentially | ✅ Could parallelize (future) |
-| **Real-world** | ❌ Not how specs are organized | ✅ Industry standard pattern |
+| **Organization** | ❌ Hard to navigate 3000 lines | ✅ TOC.md shows file→topic mapping |
+| **Flexibility** | ❌ Frontend gets database sections | ✅ Only relevant topics documented |
+| **Updates** | ❌ Rewrite entire file | ✅ Update specific numbered files |
+| **References** | ❌ Load entire spec | ✅ TOC → load specific files |
+| **Limit** | ❌ Can't exceed ~1500 lines | ✅ Unlimited (25+ files if needed) |
+| **Speed** | ❌ Slow generation (one big write) | ✅ Fast (sequential ~500 line writes) |
 
 ---
 
@@ -375,31 +380,52 @@ If you have an existing `spec.md`, you can:
 Typical project (REST API with auth):
 
 ```
-README.md          :  200 lines (index)
-architecture.md    :  300 lines (tech stack + diagrams)
-database.md        :  400 lines (5 tables with indexes)
-api.md             :  700 lines (12 endpoints fully documented)
-types.md           :  300 lines (interfaces for all entities)
-security.md        :  350 lines (auth flow + JWT + bcrypt)
-file-structure.md  :  200 lines (complete project tree)
-error-handling.md  :  250 lines (30 error codes)
+README.md          :  250 lines (topic roadmap)
+001.md            :  450 lines (System Architecture)
+002.md            :  520 lines (Database Schema - users, sessions)
+003.md            :  550 lines (API Endpoints - auth)
+004.md            :  480 lines (API Endpoints - users)
+005.md            :  580 lines (Security & Auth flow)
+006.md            :  420 lines (Error Handling)
+007.md            :  380 lines (File Structure)
+TOC.md            :   70 lines (file→topic mapping)
 ─────────────────────────────────────────────────────
-Total              : 2700 lines (comprehensive spec)
+Total              : 3700 lines across 9 files
 ```
 
 **Before**: Would timeout at ~1500 lines
-**After**: All 2700 lines generated successfully
+**After**: All 3700 lines generated successfully (no limit!)
+
+Large project (Full-stack with real-time features):
+
+```
+README.md          :  300 lines (topic roadmap)
+001.md - 012.md   : 5400 lines (12 numbered files ~450 lines each)
+TOC.md            :  150 lines (comprehensive mapping)
+─────────────────────────────────────────────────────
+Total              : 5850 lines across 14 files
+```
+
+**Can scale to 15,000+ lines if project is complex!**
 
 ---
 
 ## Summary
 
-The multi-file spec structure solves the timeout problem by:
+The numbered, chunked multi-file spec structure solves the timeout problem by:
 
-1. **Preventing timeouts**: Each file is small enough to write in one call
-2. **Better organization**: Logical separation by concern
-3. **Modular updates**: Change one section without affecting others
-4. **Easier navigation**: Jump to specific section via README
-5. **Real-world pattern**: How professional specs are organized
+1. **Preventing timeouts**: Each file is ~500 lines (fast generation, no timeouts)
+2. **Unlimited documentation**: No ceiling - can have 25+ files if project is complex
+3. **Flexible**: Only documents relevant topics (frontend vs full-stack)
+4. **Fast**: Sequential writing of manageable chunks
+5. **Clear navigation**: README roadmap + TOC mapping
+6. **Modular updates**: Change specific numbered files without affecting others
 
-**Result**: Comprehensive, complete technical specifications without LLM timeouts.
+**Result**: Comprehensive, unlimited technical specifications without LLM timeouts.
+
+**Example scale**:
+- Simple frontend: 6 files, 2,500 lines
+- REST API: 9 files, 3,700 lines
+- Full-stack SaaS: 25 files, 12,000 lines
+
+**All generated successfully with no timeouts!**

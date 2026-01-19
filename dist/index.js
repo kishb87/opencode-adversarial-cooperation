@@ -1788,41 +1788,31 @@ Before completing, validate each document:
 - [ ] User personas are detailed (not generic)
 - [ ] Acceptance criteria are testable
 
-### spec/ folder (MOST CRITICAL - Multi-file structure prevents timeouts)
-- [ ] Has ${config.documents?.minSpecLines || 1200}+ lines TOTAL across all files (aim for 2000-3500+)
-- [ ] .context/spec/README.md exists (index and overview)
-- [ ] .context/spec/architecture.md complete (200-400 lines)
-  - [ ] System architecture diagram
+### spec/ folder (MOST CRITICAL - Numbered chunked structure prevents timeouts)
+- [ ] Has ${config.documents?.minSpecLines || 1200}+ lines TOTAL across all files (aim for 2000+, no limit)
+- [ ] .context/spec/README.md exists with topic roadmap
+  - [ ] Lists ALL topics to be covered
+  - [ ] Provides quick reference
+  - [ ] Links to research.md
+- [ ] Numbered files (001.md, 002.md, etc.) cover all topics
+  - [ ] Each file ~400-600 lines
+  - [ ] Topics covered completely (no gaps)
+  - [ ] System architecture with diagrams
   - [ ] Complete tech stack with rationale from research
-  - [ ] Integration patterns documented
-- [ ] .context/spec/database.md complete (200-500 lines)
-  - [ ] ERD diagram
-  - [ ] Full CREATE TABLE for EVERY table
-  - [ ] EVERY column with type and constraints
-  - [ ] EVERY index and foreign key
-- [ ] .context/spec/api.md complete (400-800 lines)
-  - [ ] EVERY endpoint documented (not "and 10 more")
-  - [ ] EVERY request/response type with all fields
-  - [ ] EVERY validation rule
-  - [ ] EVERY error code
-  - [ ] Example requests/responses for each endpoint
-- [ ] .context/spec/types.md complete (200-400 lines)
-  - [ ] ALL TypeScript interfaces with every field
-  - [ ] No "extends BaseType" shortcuts
-  - [ ] All enums and union types
-- [ ] .context/spec/security.md complete (200-400 lines)
-  - [ ] Auth flow documented
-  - [ ] Security best practices from research
-- [ ] .context/spec/file-structure.md complete (150-250 lines)
-  - [ ] Complete project structure
-  - [ ] Purpose for EVERY file/folder
-- [ ] .context/spec/error-handling.md complete (200-300 lines)
-  - [ ] ALL error codes enumerated
-  - [ ] Validation approach
-- [ ] Additional files as needed (performance.md, deployment.md)
+  - [ ] Full CREATE TABLE for EVERY table (if applicable)
+  - [ ] EVERY API endpoint documented (if applicable)
+  - [ ] EVERY request/response type with all fields (if applicable)
+  - [ ] ALL TypeScript interfaces with every field (if applicable)
+  - [ ] Auth flow and security practices documented (if applicable)
+  - [ ] Complete project structure (if applicable)
+  - [ ] ALL error codes enumerated (if applicable)
+- [ ] .context/spec/TOC.md exists (file\u2192topic mapping)
+  - [ ] Maps each topic to its file range
+  - [ ] Makes navigation clear
 - [ ] No code with "..." or "// implementation details"
 - [ ] No "similar to above" or "repeat pattern" shortcuts
-- [ ] Each file can be written in one call (no timeouts)
+- [ ] Each file ~400-600 lines (fast generation)
+- [ ] As many files as needed to cover all topics completely
 
 ### test.md
 - [ ] Has ${config.documents?.minTestLines || 300}+ lines
@@ -1939,394 +1929,175 @@ Before completing, validate each document:
 | [Risk 1] | High/Med/Low | High/Med/Low | [Strategy] |
 \`\`\`
 
-### Technical Specification (Multi-File Structure)
+### Technical Specification (Numbered, Chunked Multi-File Structure)
 
-**CRITICAL**: Write spec as MULTIPLE FILES in \`.context/spec/\` folder to avoid timeouts.
+**CRITICAL**: Write spec as NUMBERED FILES (~500 lines each) in \`.context/spec/\` folder to avoid timeouts.
 
-**Create these files in order**:
+**Why numbered chunks?**
+- Each file is ~400-600 lines (fast generation, no timeouts)
+- Unlimited files (can have 001.md through 050.md if needed)
+- Topics can span multiple files (API Endpoints might be 003.md through 007.md)
+- Flexible - frontend projects might need 6 files, full-stack might need 30 files
 
-1. \`.context/spec/README.md\` - Index and overview (150-250 lines)
-2. \`.context/spec/architecture.md\` - System design and tech stack (200-400 lines)
-3. \`.context/spec/database.md\` - Complete schemas (200-500 lines)
-4. \`.context/spec/api.md\` - All endpoints (400-800 lines)
-5. \`.context/spec/types.md\` - TypeScript interfaces (200-400 lines)
-6. \`.context/spec/security.md\` - Auth and security (200-400 lines)
-7. \`.context/spec/file-structure.md\` - Project organization (150-250 lines)
-8. \`.context/spec/error-handling.md\` - Errors and validation (200-300 lines)
-9. \`.context/spec/performance.md\` - Optimization and scaling (150-250 lines) [if applicable]
-10. \`.context/spec/deployment.md\` - Infrastructure and CI/CD (150-250 lines) [if applicable]
+**Process**:
 
-**Total**: 2000-3500+ lines across multiple files (prevents timeouts)
+#### Step 1: Write README.md (Topic Roadmap)
 
-#### File 1: .context/spec/README.md
+Create \`.context/spec/README.md\` with high-level topic list:
 
 \`\`\`markdown
 # Technical Specification
 
 **Project**: [Project Name]
 **Generated**: [Date]
-**Tech Stack**: [Quick summary]
+**Tech Stack**: [Quick summary from research]
 
 ## Overview
 
-[2-3 paragraph high-level description of the system]
+[2-3 paragraphs describing the system]
 
-## Table of Contents
+## Topics to Cover
 
-1. [Architecture](./architecture.md) - System design, diagrams, tech stack rationale
-2. [Database](./database.md) - Complete schemas, migrations, relationships
-3. [API](./api.md) - All endpoints with full request/response specifications
-4. [Types](./types.md) - TypeScript interfaces, enums, validation schemas
-5. [Security](./security.md) - Authentication, authorization, security practices
-6. [File Structure](./file-structure.md) - Project organization and module structure
-7. [Error Handling](./error-handling.md) - Error codes, validation, error responses
-8. [Performance](./performance.md) - Optimization, caching, scaling [if applicable]
-9. [Deployment](./deployment.md) - Infrastructure, CI/CD, monitoring [if applicable]
+Based on the PRD, this specification will cover:
+
+1. **System Architecture** - High-level design, tech stack, integration patterns
+2. **Database Schema** - Complete table definitions, relationships, migrations
+3. **API Endpoints** - All REST/GraphQL endpoints with full specs
+4. **Frontend Components** - Component hierarchy, state management [if applicable]
+5. **Authentication & Security** - Auth flow, permissions, security practices
+6. **Error Handling** - Error codes, validation, error responses
+7. **File Structure** - Project organization
+8. **Deployment** - Infrastructure, CI/CD [if applicable]
+
+[List ALL topics that need documentation for this specific project]
 
 ## Quick Reference
 
-**Tech Stack**: [List from research.md]
-**Database**: [Database choice - see database.md]
-**API Base**: [Base URL/route pattern]
-**Auth Method**: [Auth approach - see security.md]
+**Tech Stack**: [From research.md]
+**Database**: [Choice]
+**API Base**: [Pattern]
+**Auth Method**: [Approach]
 
 ## Research
 
-For detailed library documentation, best practices, and integration patterns, see [../research.md](../research.md)
-
-## Document Status
-
-- [x] Architecture documented
-- [x] Database schemas complete
-- [x] API specifications complete
-- [x] Type definitions complete
-- [x] Security documented
-- [x] File structure defined
-- [x] Error handling specified
+For library documentation and best practices, see [../research.md](../research.md)
 \`\`\`
 
-#### File 2: .context/spec/architecture.md
+**IMPORTANT**: The README topic list is your roadmap. Don't generate files for topics not relevant to this project type.
+
+#### Step 2: Write Numbered Files Sequentially
+
+Write files \`001.md\`, \`002.md\`, \`003.md\`, etc., covering each topic sequentially.
+
+**File Size**: ~400-600 lines per file (natural stopping points, don't force exact 500)
+
+**Topics Spanning Multiple Files**: If a topic needs more than 600 lines, continue it in the next file.
+
+**Example for Full-Stack Project**:
+- \`001.md\` - System Architecture (complete in one file, 450 lines)
+- \`002.md\` - Database Schema Part 1 (users, sessions tables, 520 lines)
+- \`003.md\` - Database Schema Part 2 (posts, comments tables, 480 lines)
+- \`004.md\` - API Endpoints Part 1 (auth endpoints, 550 lines)
+- \`005.md\` - API Endpoints Part 2 (user endpoints, 530 lines)
+- \`006.md\` - API Endpoints Part 3 (post endpoints, 510 lines)
+- \`007.md\` - Frontend Components Part 1 (layout, auth components, 490 lines)
+- \`008.md\` - Frontend Components Part 2 (dashboard, forms, 470 lines)
+- \`009.md\` - Authentication & Security (complete, 580 lines)
+- \`010.md\` - Error Handling (complete, 420 lines)
+- \`011.md\` - File Structure (complete, 380 lines)
+- \`012.md\` - Deployment (complete, 350 lines)
+
+**Total**: 12 files, 5,740 lines - comprehensive documentation, no timeouts
+
+**Example for Frontend-Only Project**:
+- \`001.md\` - Component Architecture (380 lines)
+- \`002.md\` - State Management with Redux (520 lines)
+- \`003.md\` - Routing & Navigation (410 lines)
+- \`004.md\` - API Integration Layer (450 lines)
+- \`005.md\` - Styling & Theming (390 lines)
+- \`006.md\` - File Structure (340 lines)
+
+**Total**: 6 files, 2,490 lines - complete for frontend scope
+
+**Writing Each File**:
+\`\`\`markdown
+# [Topic Name]
+
+[If continuation: "# [Topic Name] (continued from XXX.md)"]
+
+[Write comprehensive documentation for this chunk of the topic]
+
+[Include all code, schemas, types, examples]
+
+[No shortcuts - write everything]
+
+[If topic continues: "**Continued in [next file number].md**"]
+\`\`\`
+
+**Each numbered file should**:
+- Be comprehensive for its chunk (~400-600 lines)
+- Include complete code examples (no "..." or "similar to above")
+- Reference research.md for library-specific patterns
+- Indicate if topic continues to next file
+- Maintain same detail level throughout (no shortcuts as you progress)
+
+#### Step 3: Write TOC.md (File\u2192Topic Mapping)
+
+After ALL numbered files are written, create \`.context/spec/TOC.md\`:
 
 \`\`\`markdown
-# Architecture
+# Table of Contents
 
-## System Architecture
+## File \u2192 Topic Mapping
 
-[ASCII or Mermaid diagram showing components]
+This shows which numbered files contain which topics.
 
-\`\`\`
-\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
-\u2502   Client    \u2502
-\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u252C\u2500\u2500\u2500\u2500\u2500\u2500\u2518
-       \u2502
-\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u25BC\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
-\u2502   API Layer     \u2502  (Express/Fastify)
-\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u252C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
-       \u2502
-\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u25BC\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
-\u2502  Service Layer  \u2502  (Business Logic)
-\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u252C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
-       \u2502
-\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u25BC\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
-\u2502 Repository Layer\u2502  (Data Access)
-\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u252C\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
-       \u2502
-\u250C\u2500\u2500\u2500\u2500\u2500\u2500\u25BC\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510
-\u2502    Database     \u2502  (PostgreSQL)
-\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518
-\`\`\`
+### System Architecture
+- **001.md** - Complete
 
-## Technology Stack
+### Database Schema
+- **002.md** - Users, sessions tables
+- **003.md** - Posts, comments tables
 
-**IMPORTANT**: All choices are based on research findings. See [../research.md](../research.md) for details.
+### API Endpoints
+- **004.md** - Authentication endpoints
+- **005.md** - User management endpoints
+- **006.md** - Post and comment endpoints
 
-### Core Technologies
+### Frontend Components
+- **007.md** - Layout and auth components
+- **008.md** - Dashboard and forms
 
-- **Runtime**: Node.js 22+ LTS
-  - Rationale: [From research]
-  - See: research.md#nodejs
+### Authentication & Security
+- **009.md** - Complete
 
-- **Web Framework**: [Choice from research]
-  - Rationale: [Why chosen based on research]
-  - See: research.md#[framework]
+### Error Handling
+- **010.md** - Complete
 
-- **Database**: [Choice from research]
-  - Rationale: [Why chosen]
-  - See: research.md#[database]
+### File Structure
+- **011.md** - Complete
 
-[Continue for ALL stack components]
+### Deployment
+- **012.md** - Complete
 
-### Integration Patterns
+## Navigation
 
-[Reference integration patterns from research.md]
-
-#### [Framework] + [ORM] Setup
-
-\`\`\`typescript
-// Complete setup code based on research
-[code]
+To find documentation for a specific topic:
+1. Check this TOC for the file range
+2. Open the corresponding numbered files
+3. See [README.md](./README.md) for topic overview
 \`\`\`
 
-[Include ALL major integrations]
-
-## Architecture Principles
-
-[List from agent-spec.md and research findings]
-
-1. **[Principle]**: [Description]
-2. **[Principle]**: [Description]
-\`\`\`
-
-#### File 3: .context/spec/database.md
-
-\`\`\`markdown
-# Database Schema
-
-## Entity Relationship Diagram
-
-\`\`\`mermaid
-erDiagram
-    USER ||--o{ POST : creates
-    USER ||--o{ COMMENT : writes
-    POST ||--o{ COMMENT : has
-    [Complete ERD]
-\`\`\`
-
-## Table Definitions
-
-### users
-
-\`\`\`sql
-CREATE TABLE users (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    name VARCHAR(100) NOT NULL,
-    role VARCHAR(20) NOT NULL DEFAULT 'user',
-    email_verified BOOLEAN NOT NULL DEFAULT false,
-    last_login_at TIMESTAMP,
-    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
-);
-
-CREATE INDEX idx_users_email ON users(email);
-CREATE INDEX idx_users_role ON users(role);
-CREATE INDEX idx_users_created_at ON users(created_at);
-\`\`\`
-
-**Columns**:
-- \`id\`: Primary key, auto-generated UUID
-- \`email\`: Unique user email, used for login
-- \`password_hash\`: bcrypt hash (10+ rounds)
-- [Document EVERY column]
-
-[Repeat complete CREATE TABLE for EVERY table]
-
-## Migrations
-
-[Migration strategy from research]
-
-## Relationships
-
-[Document all foreign keys and relationships]
-\`\`\`
-
-#### File 4: .context/spec/api.md
-
-\`\`\`markdown
-# API Specification
-
-## Base URL
-
-\`\`\`
-Development: http://localhost:3000/api
-Production: https://api.example.com
-\`\`\`
-
-## Authentication
-
-All endpoints except public routes require authentication.
-See [security.md](./security.md#authentication) for details.
-
-## Endpoints
-
-### Authentication Endpoints
-
-#### POST /api/auth/register
-
-**Description**: Register a new user account
-
-**Request**:
-\`\`\`typescript
-interface RegisterRequest {
-  email: string;        // Valid email format
-  password: string;     // Min 8 chars, must contain number and special char
-  name: string;         // 2-50 characters
-  acceptTerms: boolean; // Must be true
-}
-\`\`\`
-
-**Response (201)**:
-\`\`\`typescript
-interface RegisterResponse {
-  user: {
-    id: string;
-    email: string;
-    name: string;
-    role: string;
-    createdAt: string;
-  };
-  token: string;
-  refreshToken: string;
-}
-\`\`\`
-
-**Validation**:
-- Email: Must match regex
-- Password: Min 8, max 128, must have [a-z], [A-Z], [0-9], special char
-- Name: Min 2, max 50, alphanumeric and spaces only
-
-**Errors**:
-| Code | Status | Message | Description |
-|------|--------|---------|-------------|
-| AUTH_001 | 400 | INVALID_EMAIL | Email format invalid |
-| AUTH_002 | 400 | WEAK_PASSWORD | Password requirements not met |
-| AUTH_003 | 409 | EMAIL_EXISTS | Email already registered |
-
-**Example Request**:
-\`\`\`json
-{
-  "email": "alice@example.com",
-  "password": "SecurePass123!",
-  "name": "Alice Johnson",
-  "acceptTerms": true
-}
-\`\`\`
-
-**Example Response**:
-\`\`\`json
-{
-  "user": {
-    "id": "550e8400-e29b-41d4-a716-446655440000",
-    "email": "alice@example.com",
-    "name": "Alice Johnson",
-    "role": "user",
-    "createdAt": "2026-01-18T10:30:00.000Z"
-  },
-  "token": "eyJhbGc...",
-  "refreshToken": "rt_550e8400..."
-}
-\`\`\`
-
-[REPEAT THIS LEVEL OF DETAIL FOR EVERY ENDPOINT]
-
-#### POST /api/auth/login
-[Complete spec]
-
-#### POST /api/auth/logout
-[Complete spec]
-
-[EVERY endpoint documented]
-\`\`\`
-
-#### File 5: .context/spec/types.md
-
-\`\`\`markdown
-# Type Definitions
-
-All TypeScript interfaces, types, and enums used throughout the application.
-
-## User Types
-
-\`\`\`typescript
-interface User {
-  id: string;
-  email: string;
-  passwordHash: string;
-  name: string;
-  role: UserRole;
-  emailVerified: boolean;
-  lastLoginAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-type UserRole = 'admin' | 'user' | 'moderator';
-
-interface UserDTO {
-  id: string;
-  email: string;
-  name: string;
-  role: UserRole;
-  emailVerified: boolean;
-  createdAt: string;
-}
-
-[EVERY type fully defined]
-\`\`\`
-
-[Continue for ALL modules]
-\`\`\`
-
-#### File 6: .context/spec/security.md
-
-\`\`\`markdown
-# Security
-
-## Authentication
-
-[Auth flow from research]
-
-### JWT Tokens
-
-[Configuration from research.md]
-
-### Password Hashing
-
-[bcrypt configuration from research.md]
-
-## Authorization
-
-[Permission model]
-
-## Security Best Practices
-
-[From research.md security findings]
-\`\`\`
-
-#### File 7: .context/spec/file-structure.md
-
-\`\`\`markdown
-# File Structure
-
-\`\`\`
-src/
-\u251C\u2500\u2500 index.ts                 # Application entry point
-\u251C\u2500\u2500 app.ts                   # App setup
-\u251C\u2500\u2500 config/
-\u2502   \u251C\u2500\u2500 index.ts            # Config loader
-\u2502   \u2514\u2500\u2500 database.ts         # DB config
-[COMPLETE structure with purpose for EVERY file]
-\`\`\`
-\`\`\`
-
-#### File 8: .context/spec/error-handling.md
-
-\`\`\`markdown
-# Error Handling
-
-## Error Codes
-
-[ALL error codes enumerated]
-
-## Error Response Format
-
-[Standard format]
-
-## Validation
-
-[Validation approach]
-\`\`\`
+**IMPORTANT**: TOC.md is generated LAST, after you know which files cover which topics.
+
+**Total Documentation**: No limit! Can be 10,000+ lines across 25+ files if project is complex.
+
+**Benefits**:
+- \u2705 No timeouts (each file ~500 lines, quick to generate)
+- \u2705 Unlimited documentation (as many files as needed)
+- \u2705 Flexible (frontend vs full-stack vs CLI - different file counts)
+- \u2705 Fast generation (write one chunk, move to next)
+- \u2705 Clear navigation (README roadmap + TOC mapping)
 
 ## Generating Tasks
 

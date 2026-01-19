@@ -38,19 +38,16 @@ Reference the PRD with: `@.context/prd.md`
 
 ## Output Location
 
-Write to: `.context/spec/` (multiple files)
+Write to: `.context/spec/` (multiple numbered files)
 
 **Files created**:
-- `README.md` - Index and overview
-- `architecture.md` - System design and tech stack
-- `database.md` - Complete schemas
-- `api.md` - All endpoints
-- `types.md` - TypeScript interfaces
-- `security.md` - Auth and security
-- `file-structure.md` - Project organization
-- `error-handling.md` - Errors and validation
-- `performance.md` - Optimization (if applicable)
-- `deployment.md` - Infrastructure (if applicable)
+- `README.md` - Topic roadmap and overview
+- `001.md`, `002.md`, `003.md`, ... - Numbered topic files (~500 lines each)
+- `TOC.md` - File→topic mapping (created last)
+
+**Number of files**: As many as needed (typically 5-30 depending on project complexity)
+**Length per file**: ~400-600 lines (fast generation, no timeouts)
+**Total documentation**: Unlimited (could be 5,000-15,000+ lines for complex projects)
 
 ## Process
 
@@ -83,22 +80,24 @@ This command generates research findings and multi-file spec:
 - Integration examples
 - Common pitfalls and solutions
 
-### 2. `.context/spec/` - Technical Specification (Multiple Files)
+### 2. `.context/spec/` - Technical Specification (Numbered, Chunked Files)
 
-**Why multiple files?** Prevents timeouts when generating comprehensive specs.
+**Why numbered chunks?** Prevents timeouts by writing ~500 line files that generate quickly.
 
-Each file focuses on one aspect (200-800 lines each):
+**Structure**:
+- **README.md** - Topic roadmap (what will be covered)
+- **001.md** through **XXX.md** - Numbered files covering each topic sequentially (~400-600 lines each)
+- **TOC.md** - File→topic mapping (which files contain which topics)
 
-- **README.md** - Index and quick reference
-- **architecture.md** - System design, diagrams, tech stack with research references
-- **database.md** - Complete CREATE TABLE statements, ERD, relationships
-- **api.md** - EVERY endpoint with full request/response types
-- **types.md** - All TypeScript interfaces and types
-- **security.md** - Authentication, authorization, security practices
-- **file-structure.md** - Complete project organization
-- **error-handling.md** - All error codes and validation
+**Flexibility**:
+- Frontend project might have 6 files (2,500 lines total)
+- Full-stack project might have 30 files (15,000 lines total)
+- Topics can span multiple files (API Endpoints might be 003.md through 007.md)
 
-**Total**: 2000-3500+ lines across all files
+**Benefits**:
+- No timeouts (each chunk generates quickly)
+- Unlimited total documentation
+- Project-specific (only covers relevant topics)
 
 ## Format
 
