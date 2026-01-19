@@ -38,7 +38,19 @@ Reference the PRD with: `@.context/prd.md`
 
 ## Output Location
 
-Write to: `.context/spec.md`
+Write to: `.context/spec/` (multiple files)
+
+**Files created**:
+- `README.md` - Index and overview
+- `architecture.md` - System design and tech stack
+- `database.md` - Complete schemas
+- `api.md` - All endpoints
+- `types.md` - TypeScript interfaces
+- `security.md` - Auth and security
+- `file-structure.md` - Project organization
+- `error-handling.md` - Errors and validation
+- `performance.md` - Optimization (if applicable)
+- `deployment.md` - Infrastructure (if applicable)
 
 ## Process
 
@@ -63,19 +75,30 @@ Write to: `.context/spec.md`
 
 ## Outputs
 
-This command generates TWO files:
+This command generates research findings and multi-file spec:
 
-1. **`.context/research.md`** - Comprehensive library research
-   - All library documentation, best practices, patterns
-   - Security and performance considerations
-   - Integration examples
-   - Common pitfalls and solutions
+### 1. `.context/research.md` - Library Research
+- All library documentation, best practices, patterns
+- Security and performance considerations
+- Integration examples
+- Common pitfalls and solutions
 
-2. **`.context/spec.md`** - Technical specification
-   - Architecture and tech stack decisions (with research references)
-   - Complete database schemas
-   - Full API specifications
-   - Implementation details
+### 2. `.context/spec/` - Technical Specification (Multiple Files)
+
+**Why multiple files?** Prevents timeouts when generating comprehensive specs.
+
+Each file focuses on one aspect (200-800 lines each):
+
+- **README.md** - Index and quick reference
+- **architecture.md** - System design, diagrams, tech stack with research references
+- **database.md** - Complete CREATE TABLE statements, ERD, relationships
+- **api.md** - EVERY endpoint with full request/response types
+- **types.md** - All TypeScript interfaces and types
+- **security.md** - Authentication, authorization, security practices
+- **file-structure.md** - Complete project organization
+- **error-handling.md** - All error codes and validation
+
+**Total**: 2000-3500+ lines across all files
 
 ## Format
 

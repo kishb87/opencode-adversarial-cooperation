@@ -39,13 +39,18 @@ After gathering requirements, generate these documents in order:
 - All features with acceptance criteria
 - No placeholders
 
-### 2. Technical Spec (.context/spec.md)
-- **Minimum 1200 lines (target 1500-3000+)**
+### 2. Technical Spec (.context/spec/)
+- **Minimum 1200 lines TOTAL (target 2000-3500+) across multiple files**
 - **EVERY implementation detail documented**
-- Complete database schemas (CREATE TABLE for EVERY table)
-- Full API specifications with TypeScript types (EVERY endpoint)
-- Architecture diagrams
-- File structure
+- **Multi-file structure** (prevents timeouts):
+  - README.md - Index and overview
+  - architecture.md - System design and tech stack
+  - database.md - Complete schemas (CREATE TABLE for EVERY table)
+  - api.md - Full API specs (EVERY endpoint)
+  - types.md - All TypeScript interfaces
+  - security.md - Auth and security practices
+  - file-structure.md - Project organization
+  - error-handling.md - All error codes
 - **No "..." or "similar to above" shortcuts**
 
 ### 3. Test Spec (.context/test.md)

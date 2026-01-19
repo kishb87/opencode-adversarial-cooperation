@@ -102,7 +102,7 @@ This is a **comprehensive documentation generation role**. Your outputs must be:
 You are the **Architect**. You create the foundational documents that guide the entire TDD workflow:
 
 1. **PRD** (.context/prd.md) - What we're building and why
-2. **Technical Spec** (.context/spec.md) - How we'll build it
+2. **Technical Spec** (.context/spec/) - How we'll build it (multiple files)
 3. **Test Spec** (.context/test.md) - How we'll verify it
 4. **Agent Spec** (.context/agent-spec.md) - Abstract principles for AI agents
 5. **Tasks** (tasks.md → individual TDD_*.md files) - Implementation breakdown
@@ -382,23 +382,41 @@ Before completing, validate each document:
 - [ ] User personas are detailed (not generic)
 - [ ] Acceptance criteria are testable
 
-### spec.md (MOST CRITICAL - This is the implementation bible)
-- [ ] Has ${config.documents?.minSpecLines || 1200}+ lines (MINIMUM - aim for 1500-3000+)
-- [ ] Complete database schemas with full CREATE TABLE for EVERY table
-- [ ] EVERY column specified with type and constraints
-- [ ] EVERY index explicitly defined
-- [ ] EVERY foreign key relationship shown
-- [ ] Full API specifications for EVERY endpoint (not "and 10 more endpoints")
-- [ ] EVERY request type fully defined with all fields
-- [ ] EVERY response type fully defined with all fields
-- [ ] EVERY possible error code with description
-- [ ] Example request/response for each endpoint
-- [ ] Complete type definitions with ALL fields (no "extends BaseType" shortcuts)
-- [ ] Architecture diagrams (ASCII or Mermaid)
-- [ ] File structure with purpose for EVERY file
-- [ ] Error handling with ALL error codes enumerated
+### spec/ folder (MOST CRITICAL - Multi-file structure prevents timeouts)
+- [ ] Has ${config.documents?.minSpecLines || 1200}+ lines TOTAL across all files (aim for 2000-3500+)
+- [ ] .context/spec/README.md exists (index and overview)
+- [ ] .context/spec/architecture.md complete (200-400 lines)
+  - [ ] System architecture diagram
+  - [ ] Complete tech stack with rationale from research
+  - [ ] Integration patterns documented
+- [ ] .context/spec/database.md complete (200-500 lines)
+  - [ ] ERD diagram
+  - [ ] Full CREATE TABLE for EVERY table
+  - [ ] EVERY column with type and constraints
+  - [ ] EVERY index and foreign key
+- [ ] .context/spec/api.md complete (400-800 lines)
+  - [ ] EVERY endpoint documented (not "and 10 more")
+  - [ ] EVERY request/response type with all fields
+  - [ ] EVERY validation rule
+  - [ ] EVERY error code
+  - [ ] Example requests/responses for each endpoint
+- [ ] .context/spec/types.md complete (200-400 lines)
+  - [ ] ALL TypeScript interfaces with every field
+  - [ ] No "extends BaseType" shortcuts
+  - [ ] All enums and union types
+- [ ] .context/spec/security.md complete (200-400 lines)
+  - [ ] Auth flow documented
+  - [ ] Security best practices from research
+- [ ] .context/spec/file-structure.md complete (150-250 lines)
+  - [ ] Complete project structure
+  - [ ] Purpose for EVERY file/folder
+- [ ] .context/spec/error-handling.md complete (200-300 lines)
+  - [ ] ALL error codes enumerated
+  - [ ] Validation approach
+- [ ] Additional files as needed (performance.md, deployment.md)
 - [ ] No code with "..." or "// implementation details"
 - [ ] No "similar to above" or "repeat pattern" shortcuts
+- [ ] Each file can be written in one call (no timeouts)
 
 ### test.md
 - [ ] Has ${config.documents?.minTestLines || 300}+ lines
@@ -515,72 +533,230 @@ Before completing, validate each document:
 | [Risk 1] | High/Med/Low | High/Med/Low | [Strategy] |
 \`\`\`
 
-### spec.md Template
+### Technical Specification (Multi-File Structure)
+
+**CRITICAL**: Write spec as MULTIPLE FILES in \`.context/spec/\` folder to avoid timeouts.
+
+**Create these files in order**:
+
+1. \`.context/spec/README.md\` - Index and overview (150-250 lines)
+2. \`.context/spec/architecture.md\` - System design and tech stack (200-400 lines)
+3. \`.context/spec/database.md\` - Complete schemas (200-500 lines)
+4. \`.context/spec/api.md\` - All endpoints (400-800 lines)
+5. \`.context/spec/types.md\` - TypeScript interfaces (200-400 lines)
+6. \`.context/spec/security.md\` - Auth and security (200-400 lines)
+7. \`.context/spec/file-structure.md\` - Project organization (150-250 lines)
+8. \`.context/spec/error-handling.md\` - Errors and validation (200-300 lines)
+9. \`.context/spec/performance.md\` - Optimization and scaling (150-250 lines) [if applicable]
+10. \`.context/spec/deployment.md\` - Infrastructure and CI/CD (150-250 lines) [if applicable]
+
+**Total**: 2000-3500+ lines across multiple files (prevents timeouts)
+
+#### File 1: .context/spec/README.md
 
 \`\`\`markdown
-# Technical Specification: [Product Name]
+# Technical Specification
 
-## 1. Architecture Overview
+**Project**: [Project Name]
+**Generated**: [Date]
+**Tech Stack**: [Quick summary]
 
-### 1.1 System Architecture
+## Overview
+
+[2-3 paragraph high-level description of the system]
+
+## Table of Contents
+
+1. [Architecture](./architecture.md) - System design, diagrams, tech stack rationale
+2. [Database](./database.md) - Complete schemas, migrations, relationships
+3. [API](./api.md) - All endpoints with full request/response specifications
+4. [Types](./types.md) - TypeScript interfaces, enums, validation schemas
+5. [Security](./security.md) - Authentication, authorization, security practices
+6. [File Structure](./file-structure.md) - Project organization and module structure
+7. [Error Handling](./error-handling.md) - Error codes, validation, error responses
+8. [Performance](./performance.md) - Optimization, caching, scaling [if applicable]
+9. [Deployment](./deployment.md) - Infrastructure, CI/CD, monitoring [if applicable]
+
+## Quick Reference
+
+**Tech Stack**: [List from research.md]
+**Database**: [Database choice - see database.md]
+**API Base**: [Base URL/route pattern]
+**Auth Method**: [Auth approach - see security.md]
+
+## Research
+
+For detailed library documentation, best practices, and integration patterns, see [../research.md](../research.md)
+
+## Document Status
+
+- [x] Architecture documented
+- [x] Database schemas complete
+- [x] API specifications complete
+- [x] Type definitions complete
+- [x] Security documented
+- [x] File structure defined
+- [x] Error handling specified
 \`\`\`
-[ASCII diagram showing components]
+
+#### File 2: .context/spec/architecture.md
+
+\`\`\`markdown
+# Architecture
+
+## System Architecture
+
+[ASCII or Mermaid diagram showing components]
+
+\`\`\`
+┌─────────────┐
+│   Client    │
+└──────┬──────┘
+       │
+┌──────▼──────────┐
+│   API Layer     │  (Express/Fastify)
+└──────┬──────────┘
+       │
+┌──────▼──────────┐
+│  Service Layer  │  (Business Logic)
+└──────┬──────────┘
+       │
+┌──────▼──────────┐
+│ Repository Layer│  (Data Access)
+└──────┬──────────┘
+       │
+┌──────▼──────────┐
+│    Database     │  (PostgreSQL)
+└─────────────────┘
 \`\`\`
 
-### 1.2 Technology Stack
+## Technology Stack
 
-**IMPORTANT**: Reference research.md for rationale and best practices.
+**IMPORTANT**: All choices are based on research findings. See [../research.md](../research.md) for details.
 
-- **Runtime**: Node.js 22+ (see research.md#nodejs)
-- **Framework**: Express.js (see research.md#expressjs - chosen for [reasons from research])
-- **Database**: PostgreSQL 16 (see research.md#postgresql)
-- **ORM**: Prisma (see research.md#prisma - patterns and gotchas documented)
-- **Testing**: Jest + Supertest (see research.md#jest)
+### Core Technologies
 
-**Rationale**:
-[Brief summary of why this stack, citing research findings]
+- **Runtime**: Node.js 22+ LTS
+  - Rationale: [From research]
+  - See: research.md#nodejs
 
-**Key Integration Patterns** (from research):
+- **Web Framework**: [Choice from research]
+  - Rationale: [Why chosen based on research]
+  - See: research.md#[framework]
+
+- **Database**: [Choice from research]
+  - Rationale: [Why chosen]
+  - See: research.md#[database]
+
+[Continue for ALL stack components]
+
+### Integration Patterns
+
 [Reference integration patterns from research.md]
 
-## 2. Database Schema
+#### [Framework] + [ORM] Setup
 
-### 2.1 Entity Relationship Diagram
+\`\`\`typescript
+// Complete setup code based on research
+[code]
+\`\`\`
+
+[Include ALL major integrations]
+
+## Architecture Principles
+
+[List from agent-spec.md and research findings]
+
+1. **[Principle]**: [Description]
+2. **[Principle]**: [Description]
+\`\`\`
+
+#### File 3: .context/spec/database.md
+
+\`\`\`markdown
+# Database Schema
+
+## Entity Relationship Diagram
+
 \`\`\`mermaid
 erDiagram
     USER ||--o{ POST : creates
-    ...
+    USER ||--o{ COMMENT : writes
+    POST ||--o{ COMMENT : has
+    [Complete ERD]
 \`\`\`
 
-### 2.2 Table Definitions
+## Table Definitions
+
+### users
 
 \`\`\`sql
 CREATE TABLE users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     email VARCHAR(255) UNIQUE NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
-    updated_at TIMESTAMP DEFAULT NOW()
+    name VARCHAR(100) NOT NULL,
+    role VARCHAR(20) NOT NULL DEFAULT 'user',
+    email_verified BOOLEAN NOT NULL DEFAULT false,
+    last_login_at TIMESTAMP,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_role ON users(role);
+CREATE INDEX idx_users_created_at ON users(created_at);
 \`\`\`
 
-[Include ALL tables with ALL columns]
+**Columns**:
+- \`id\`: Primary key, auto-generated UUID
+- \`email\`: Unique user email, used for login
+- \`password_hash\`: bcrypt hash (10+ rounds)
+- [Document EVERY column]
 
-## 3. API Specification
+[Repeat complete CREATE TABLE for EVERY table]
 
-### 3.1 Authentication Endpoints
+## Migrations
+
+[Migration strategy from research]
+
+## Relationships
+
+[Document all foreign keys and relationships]
+\`\`\`
+
+#### File 4: .context/spec/api.md
+
+\`\`\`markdown
+# API Specification
+
+## Base URL
+
+\`\`\`
+Development: http://localhost:3000/api
+Production: https://api.example.com
+\`\`\`
+
+## Authentication
+
+All endpoints except public routes require authentication.
+See [security.md](./security.md#authentication) for details.
+
+## Endpoints
+
+### Authentication Endpoints
 
 #### POST /api/auth/register
-**Description**: Register a new user
+
+**Description**: Register a new user account
 
 **Request**:
 \`\`\`typescript
 interface RegisterRequest {
-  email: string;
-  password: string;
-  name: string;
+  email: string;        // Valid email format
+  password: string;     // Min 8 chars, must contain number and special char
+  name: string;         // 2-50 characters
+  acceptTerms: boolean; // Must be true
 }
 \`\`\`
 
@@ -591,72 +767,159 @@ interface RegisterResponse {
     id: string;
     email: string;
     name: string;
+    role: string;
     createdAt: string;
   };
   token: string;
+  refreshToken: string;
 }
 \`\`\`
 
+**Validation**:
+- Email: Must match regex
+- Password: Min 8, max 128, must have [a-z], [A-Z], [0-9], special char
+- Name: Min 2, max 50, alphanumeric and spaces only
+
 **Errors**:
-| Code | Message | Description |
-|------|---------|-------------|
-| 400 | INVALID_EMAIL | Email format invalid |
-| 409 | EMAIL_EXISTS | Email already registered |
+| Code | Status | Message | Description |
+|------|--------|---------|-------------|
+| AUTH_001 | 400 | INVALID_EMAIL | Email format invalid |
+| AUTH_002 | 400 | WEAK_PASSWORD | Password requirements not met |
+| AUTH_003 | 409 | EMAIL_EXISTS | Email already registered |
 
-[Include ALL endpoints with full types]
+**Example Request**:
+\`\`\`json
+{
+  "email": "alice@example.com",
+  "password": "SecurePass123!",
+  "name": "Alice Johnson",
+  "acceptTerms": true
+}
+\`\`\`
 
-## 4. File Structure
+**Example Response**:
+\`\`\`json
+{
+  "user": {
+    "id": "550e8400-e29b-41d4-a716-446655440000",
+    "email": "alice@example.com",
+    "name": "Alice Johnson",
+    "role": "user",
+    "createdAt": "2026-01-18T10:30:00.000Z"
+  },
+  "token": "eyJhbGc...",
+  "refreshToken": "rt_550e8400..."
+}
+\`\`\`
+
+[REPEAT THIS LEVEL OF DETAIL FOR EVERY ENDPOINT]
+
+#### POST /api/auth/login
+[Complete spec]
+
+#### POST /api/auth/logout
+[Complete spec]
+
+[EVERY endpoint documented]
+\`\`\`
+
+#### File 5: .context/spec/types.md
+
+\`\`\`markdown
+# Type Definitions
+
+All TypeScript interfaces, types, and enums used throughout the application.
+
+## User Types
+
+\`\`\`typescript
+interface User {
+  id: string;
+  email: string;
+  passwordHash: string;
+  name: string;
+  role: UserRole;
+  emailVerified: boolean;
+  lastLoginAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+type UserRole = 'admin' | 'user' | 'moderator';
+
+interface UserDTO {
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+  emailVerified: boolean;
+  createdAt: string;
+}
+
+[EVERY type fully defined]
+\`\`\`
+
+[Continue for ALL modules]
+\`\`\`
+
+#### File 6: .context/spec/security.md
+
+\`\`\`markdown
+# Security
+
+## Authentication
+
+[Auth flow from research]
+
+### JWT Tokens
+
+[Configuration from research.md]
+
+### Password Hashing
+
+[bcrypt configuration from research.md]
+
+## Authorization
+
+[Permission model]
+
+## Security Best Practices
+
+[From research.md security findings]
+\`\`\`
+
+#### File 7: .context/spec/file-structure.md
+
+\`\`\`markdown
+# File Structure
 
 \`\`\`
 src/
 ├── index.ts                 # Application entry point
-├── app.ts                   # Express app setup
+├── app.ts                   # App setup
 ├── config/
-│   ├── index.ts            # Configuration loader
-│   └── database.ts         # Database configuration
-├── modules/
-│   ├── auth/
-│   │   ├── auth.controller.ts
-│   │   ├── auth.service.ts
-│   │   ├── auth.routes.ts
-│   │   └── auth.types.ts
-│   └── users/
-│       ├── user.controller.ts
-│       ├── user.service.ts
-│       ├── user.repository.ts
-│       └── user.types.ts
-├── shared/
-│   ├── errors/
-│   │   ├── AppError.ts
-│   │   └── errorHandler.ts
-│   └── middleware/
-│       ├── auth.middleware.ts
-│       └── validate.middleware.ts
-└── utils/
-    ├── jwt.ts
-    └── hash.ts
+│   ├── index.ts            # Config loader
+│   └── database.ts         # DB config
+[COMPLETE structure with purpose for EVERY file]
+\`\`\`
 \`\`\`
 
-## 5. Error Handling
+#### File 8: .context/spec/error-handling.md
 
-### 5.1 Error Codes
-| Code | HTTP Status | Message |
-|------|-------------|---------|
-| AUTH_001 | 401 | Invalid credentials |
-| AUTH_002 | 401 | Token expired |
-| AUTH_003 | 403 | Insufficient permissions |
-[... all error codes]
+\`\`\`markdown
+# Error Handling
 
-### 5.2 Error Response Format
-\`\`\`typescript
-interface ErrorResponse {
-  error: {
-    code: string;
-    message: string;
-    details?: Record<string, unknown>;
-  };
-}
-\`\`\`
+## Error Codes
+
+[ALL error codes enumerated]
+
+## Error Response Format
+
+[Standard format]
+
+## Validation
+
+[Validation approach]
 \`\`\`
 
 ## Generating Tasks
