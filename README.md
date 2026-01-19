@@ -538,14 +538,21 @@ The Architect will:
 
 The Orchestrator will:
 1. Load workflow state from `.tdd/state.json`
-2. Get next task using `tdd_next` tool
-3. Invoke `@actor` with task context
-4. Actor implements using TDD (Red → Green → Refactor)
-5. Invoke `@critic` with handoff (no Actor reasoning)
-6. Process verdict:
-   - **APPROVED**: Mark complete, move to next task
-   - **NOT APPROVED**: Retry with feedback (max 3 attempts)
-7. Update state and continue
+2. **Create a todo list in the UI** with all tasks (visible progress tracking)
+3. Get next task using `tdd_next` tool
+4. **Mark current task as "in progress"** in the todo list
+5. Invoke `@actor` with task context
+6. Actor implements using TDD (Red → Green → Refactor)
+7. Invoke `@critic` with handoff (no Actor reasoning)
+8. Process verdict and **update todo list**:
+   - **APPROVED**: Mark task as "completed", move to next
+   - **NOT APPROVED**: Keep as "in progress", retry with feedback (max 3 attempts)
+9. Update state and continue
+
+**Real-time visibility**: You'll see the todo list in the UI showing:
+- ✅ Completed tasks (green checkmarks)
+- 🔄 Current task being worked on (in progress)
+- ⏳ Pending tasks (not yet started)
 
 ### 4. Monitor Progress
 
@@ -866,6 +873,14 @@ Actor and Critic start with clean slate every time:
 - No conversation history baggage
 - Independent thinking
 - Objective validation
+
+### ✅ Real-Time Task Tracking
+
+Orchestrator maintains a visible todo list in the UI:
+- See all tasks at a glance (pending, in progress, completed)
+- Watch progress in real-time as tasks complete
+- Know exactly which task is being worked on
+- Visual feedback throughout the entire workflow
 
 ## Best Practices
 

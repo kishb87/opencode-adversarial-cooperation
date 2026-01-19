@@ -24,6 +24,7 @@ export const orchestratorAgent = (config: TDDConfig) => ({
     write: true,
     edit: true,
     read: true,
+    todo: true,
   },
   permission: {
     bash: "allow" as const,
@@ -90,25 +91,80 @@ Read and update state in \`.tdd/state.json\`:
 - \`completed\` - All tasks done
 - \`blocked\` - Max retries exceeded
 
+## Task List Tracking (TodoWrite)
+
+**CRITICAL**: Use TodoWrite to maintain a visible task list in the UI as you work through tasks.
+
+### Initial Setup (First Run)
+
+When starting the workflow, create a todo list from all task files:
+
+\`\`\`
+1. Read all task files: ls tasks/TDD_*.md
+2. Create TodoWrite with all tasks:
+   - status: "pending" for unstarted tasks
+   - status: "completed" for tasks in state.completed_tasks
+   - status: "in_progress" for state.current_task
+
+Example TodoWrite:
+  todos: [
+    { content: "TDD_001: Database schema setup", status: "completed", activeForm: "Database schema setup complete" },
+    { content: "TDD_002: User model validation", status: "completed", activeForm: "User model validation complete" },
+    { content: "TDD_003: JWT middleware", status: "in_progress", activeForm: "Implementing JWT middleware" },
+    { content: "TDD_004: Login endpoint", status: "pending", activeForm: "Implementing login endpoint" },
+    { content: "TDD_005: Password reset flow", status: "pending", activeForm: "Implementing password reset flow" }
+  ]
+\`\`\`
+
+### During Workflow
+
+Update the todo list as tasks progress:
+
+**Before invoking Actor**:
+\`\`\`
+Mark current task as "in_progress"
+\`\`\`
+
+**After Critic APPROVED**:
+\`\`\`
+Mark task as "completed"
+Move to next task and mark as "in_progress"
+\`\`\`
+
+**After max retries exceeded**:
+\`\`\`
+Keep task as "in_progress" (it's blocked, not completed)
+Report to user: "Task TDD_X blocked after 3 attempts"
+\`\`\`
+
+**Benefits**:
+- User sees real-time progress in UI
+- Clear visibility into which task is being worked on
+- Visual indicator of completed vs remaining work
+- Persistent across the entire workflow session
+
 ## Workflow Loop
 
 \`\`\`
-1. Load State
-   └── Read .tdd/state.json
+1. Load State & Initialize Todo List
+   ├── Read .tdd/state.json
+   └── Create/Update TodoWrite with all tasks
 2. Prepare Actor Context (Fresh)
    └── Include: prd.md, agent-spec.md, task file, [critic feedback if retry]
-3. Invoke @actor (Subagent - Fresh Context)
+3. Mark Task as in_progress (TodoWrite)
+   └── Update todo list before invoking Actor
+4. Invoke @actor (Subagent - Fresh Context)
    └── Actor reads codebase, implements task
-4. Prepare Critic Context (Fresh)
+5. Prepare Critic Context (Fresh)
    └── Include: prd.md, agent-spec.md, task file (test_scope only)
-5. Invoke @critic (Subagent - Fresh Context)
+6. Invoke @critic (Subagent - Fresh Context)
    └── Critic runs tests, validates independently
-6. Process Verdict
-   ├── APPROVED → Mark complete, move to next task
+7. Process Verdict & Update Todo List
+   ├── APPROVED → Mark complete (TodoWrite), move to next task
    └── NOT APPROVED → Increment attempt, retry or escalate
-7. Update State
+8. Update State
    └── Write .tdd/state.json
-8. Loop or Complete
+9. Loop or Complete
 \`\`\`
 
 ## Context Preparation
@@ -257,6 +313,8 @@ agent: critic
 ## Important Rules
 
 ### DO:
+- ✅ Create TodoWrite list at workflow start with all tasks
+- ✅ Update TodoWrite as tasks progress (pending → in_progress → completed)
 - ✅ Always prepare fresh context for Actor and Critic
 - ✅ Include Critic feedback when Actor retries
 - ✅ Track state accurately in .tdd/state.json
