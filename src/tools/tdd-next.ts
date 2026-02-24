@@ -1,5 +1,6 @@
 import { tool } from "@opencode-ai/plugin"
 import type { Shell } from "@opencode-ai/plugin"
+import { loadConfig } from "../config/loader"
 
 interface TDDState {
   workflow_phase: string
@@ -36,6 +37,11 @@ Updates state to mark task as current.`,
         : (directory?.path || process.cwd())
 
       try {
+        // Load config to resolve tasksDir
+        const config = await loadConfig(dir)
+        const tasksDir = config.workflow?.tasksDir ?? ".context/tasks"
+        const tasksDirPath = `${dir}/${tasksDir}`
+
         // Read current state
         const stateContent = await $`cat ${dir}/.tdd/state.json`.text()
         const state: TDDState = JSON.parse(stateContent)
@@ -43,10 +49,10 @@ Updates state to mark task as current.`,
         // Get list of task files
         let taskFiles: string[] = []
         try {
-          const taskList = await $`ls ${dir}/tasks/TDD_*.md 2>/dev/null | sort -V`.text()
+          const taskList = await $`ls ${tasksDirPath}/TDD_*.md 2>/dev/null | sort -V`.text()
           taskFiles = taskList.trim().split("\n").filter(Boolean)
         } catch {
-          return `❌ No task files found in ${dir}/tasks/
+          return `❌ No task files found in ${tasksDirPath}/
 
 Generate tasks first:
 1. Run \`/architect-full "Your project description"\` to generate all documents
@@ -55,7 +61,7 @@ Generate tasks first:
         }
 
         if (taskFiles.length === 0) {
-          return `❌ No task files found in ${dir}/tasks/
+          return `❌ No task files found in ${tasksDirPath}/
 
 Create TDD task files (TDD_1.md, TDD_2.md, etc.) to begin the workflow.`
         }

@@ -5,13 +5,13 @@ import type { Shell } from "@opencode-ai/plugin"
  * TDD Init Tool
  *
  * Initializes the TDD project structure:
- * - .context/ - Foundational documents (PRD, spec, test spec, agent spec)
+ * - .context/ - Foundational documents (PRD, spec, test spec, agent spec, tasks)
  * - .tdd/ - Workflow state (gitignored)
- * - tasks/ - Individual TDD task files
+ * - opencode-tdd.json - Plugin configuration
  */
 export const tddInitTool = ($: Shell, directory: any) =>
   tool({
-    description: `Initialize TDD project structure with .context/, .tdd/, and tasks/ directories.
+    description: `Initialize TDD project structure with .context/, .tdd/, and opencode-tdd.json config.
 Creates initial state.json for workflow tracking.
 Safe to run multiple times - won't overwrite existing files.`,
     args: {
@@ -34,9 +34,8 @@ Safe to run multiple times - won't overwrite existing files.`,
 
       try {
         // Create directories
-        await $`mkdir -p ${dir}/.context`
+        await $`mkdir -p ${dir}/.context/tasks`
         await $`mkdir -p ${dir}/.tdd`
-        await $`mkdir -p ${dir}/tasks`
 
         // Add .tdd to .gitignore if not already there
         try {
@@ -71,9 +70,8 @@ Safe to run multiple times - won't overwrite existing files.`,
           return `TDD structure already initialized.
 
 Existing directories:
-- .context/ - Foundational documents
+- .context/ - Foundational documents (including tasks/)
 - .tdd/ - Workflow state
-- tasks/ - Task files
 
 Use force=true to reset state.
 
@@ -154,6 +152,26 @@ Run \`tdd_status\` to check current progress.`
           await $`echo ${researchTOC} > ${dir}/.context/research/TOC.md`
         }
 
+        // Create config file if it doesn't exist
+        try {
+          await $`test -f ${dir}/opencode-tdd.json`
+        } catch {
+          const configContent = {
+            models: {
+              // actor: "claude-3-opus",
+              // critic: "gpt-4",
+              // orchestrator: "claude-3-sonnet",
+              // architect: "claude-3-opus",
+              // researcher: "gpt-3.5-turbo",
+            },
+            workflow: {
+              testCommand: testCommands[projectType],
+              tasksDir: ".context/tasks",
+            },
+          }
+          await $`echo ${JSON.stringify(configContent, null, 2)} > ${dir}/opencode-tdd.json`
+        }
+
         return `✅ TDD project initialized successfully!
 
 ## Created Structure
@@ -161,6 +179,7 @@ Run \`tdd_status\` to check current progress.`
 \`\`\`
 ${dir}/
 ├── .context/
+│   ├── tasks/          # TDD task files
 │   ├── prd.md          # Product requirements
 │   ├── spec/           # Technical specification (numbered files)
 │   │   └── README.md   # Spec roadmap
@@ -172,7 +191,7 @@ ${dir}/
 ├── .tdd/
 │   ├── state.json      # Workflow state
 │   └── test-mapping.json
-├── tasks/              # TDD task files go here
+├── opencode-tdd.json   # Plugin config (model overrides, etc.)
 └── .gitignore          # Updated to ignore .tdd/
 \`\`\`
 
@@ -180,6 +199,13 @@ ${dir}/
 
 - **Type**: ${projectType}
 - **Test Command**: ${testCommands[projectType]}
+
+## Configuration
+
+Edit \`opencode-tdd.json\` to customize:
+- **Model assignments**: Uncomment and set model names for actor, critic, etc.
+- **Test command**: Override the default test command
+- **Workflow settings**: Adjust retries, auto-validate, etc.
 
 ## Next Steps
 
@@ -196,7 +222,7 @@ Review and refine each document:
 \`/tdd/architect-full "Your project description"\`
 
 **Option 3: Manual**
-Create docs in .context/ and tasks/ manually`
+Create docs in .context/ manually`
       } catch (error) {
         return `❌ Failed to initialize TDD structure: ${error}`
       }

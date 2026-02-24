@@ -54,7 +54,7 @@ export const TDDConfigSchema = z.object({
       /** Test command to run (supports npm, pnpm, yarn, bun) */
       testCommand: z.string().default("npm test"),
       /** Directory for task files */
-      tasksDir: z.string().default("tasks"),
+      tasksDir: z.string().default(".context/tasks"),
       /** Directory for context files */
       contextDir: z.string().default(".context"),
       /** Directory for TDD state */

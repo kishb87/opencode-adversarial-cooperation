@@ -67,7 +67,7 @@ After gathering requirements, generate these documents in order:
 - Patterns and conventions
 - No specific code paths
 
-### 5. Tasks (tasks/TDD_*.md)
+### 5. Tasks (.context/tasks/TDD_*.md)
 - Create individual task files
 - Each with full frontmatter (test_scope, existing_code_context)
 - Logical dependency order

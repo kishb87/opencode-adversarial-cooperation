@@ -456,7 +456,7 @@ Before completing, validate each document:
   - [ ] @researcher agents spawned in PARALLEL for each topic
   - [ ] .context/research/ files created for each implementation topic
   - [ ] .context/research/TOC.md updated with new research files
-- [ ] Individual task files created: tasks/TDD_001.md, tasks/TDD_002.md, etc.
+- [ ] Individual task files created: .context/tasks/TDD_001.md, .context/tasks/TDD_002.md, etc.
 - [ ] Each task file has:
   - [ ] Complete frontmatter (test_scope, dependencies, existing_code_context)
   - [ ] Implementation Guidance section (from research)
@@ -1195,7 +1195,7 @@ Works with bcrypt for password hashing, express for routing.
 
 ### Phase 2: Create Task Files
 
-Create individual task files in \`tasks/\` directory with implementation guidance:
+Create individual task files in \`.context/tasks/\` directory with implementation guidance:
 
 **Task File Template**:
 

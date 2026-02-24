@@ -1,5 +1,6 @@
 import { tool } from "@opencode-ai/plugin"
 import type { Shell } from "@opencode-ai/plugin"
+import { loadConfig } from "../config/loader"
 
 interface TDDState {
   version: string
@@ -44,6 +45,11 @@ Shows completed tasks, current task, and next steps.`,
         : (directory?.path || process.cwd())
 
       try {
+        // Load config to resolve tasksDir
+        const config = await loadConfig(dir)
+        const tasksDir = config.workflow?.tasksDir ?? ".context/tasks"
+        const tasksDirPath = `${dir}/${tasksDir}`
+
         // Read state file
         const stateContent = await $`cat ${dir}/.tdd/state.json`.text()
         const state: TDDState = JSON.parse(stateContent)
@@ -55,7 +61,7 @@ Shows completed tasks, current task, and next steps.`,
         // Count task files
         let taskFiles: string[] = []
         try {
-          const taskList = await $`ls ${dir}/tasks/TDD_*.md 2>/dev/null`.text()
+          const taskList = await $`ls ${tasksDirPath}/TDD_*.md 2>/dev/null`.text()
           taskFiles = taskList.trim().split("\n").filter(Boolean)
         } catch {
           // No task files yet
@@ -99,7 +105,7 @@ ${state.last_critic_feedback}
 
         if (verbose && state.current_task) {
           try {
-            const taskContent = await $`cat ${dir}/tasks/${state.current_task}.md`.text()
+            const taskContent = await $`cat ${tasksDirPath}/${state.current_task}.md`.text()
             output += `
 ## Current Task Content
 

@@ -117,7 +117,7 @@ ${state.last_critic_feedback || "None"}
 
 ### Important
 - Actor and Critic agents use FRESH context per invocation
-- Task files in tasks/ directory contain full requirements
+- Task files in .context/tasks/ directory contain full requirements
 - State is tracked in .tdd/state.json
 `)
       } catch {

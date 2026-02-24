@@ -19,7 +19,7 @@ Reference with: `@.context/prd.md`, `@.context/spec.md`, `@.context/test.md`, `@
 
 ## Requirements
 
-- Create individual task files: `tasks/TDD_001.md`, `tasks/TDD_002.md`, etc.
+- Create individual task files: `.context/tasks/TDD_001.md`, `.context/tasks/TDD_002.md`, etc.
 - Minimum 10 tasks for a typical project (adjust based on scope)
 - Each task should be:
   - **Focused** - Single feature or component
@@ -266,10 +266,10 @@ Before finishing, ensure:
 
 ## Output
 
-Create task files in `tasks/` directory:
-- `tasks/TDD_001.md`
-- `tasks/TDD_002.md`
-- `tasks/TDD_003.md`
+Create task files in `.context/tasks/` directory:
+- `.context/tasks/TDD_001.md`
+- `.context/tasks/TDD_002.md`
+- `.context/tasks/TDD_003.md`
 - ... (as many as needed)
 
 And update `.tdd/state.json` with the total count.

@@ -62,11 +62,11 @@ Both Actor and Critic receive fresh context each invocation. This aligns with "A
 Use \`@\` to include file contents in prompts:
 - \`@.context/prd.md\` - Product requirements
 - \`@.context/agent-spec.md\` - Architectural principles
-- \`@tasks/TDD_X.md\` - Current task file
+- \`@.context/tasks/TDD_X.md\` - Current task file
 
 Use command execution syntax to include output:
 - Read state file: cat .tdd/state.json
-- List task files: ls tasks/TDD_*.md
+- List task files: ls .context/tasks/TDD_*.md
 
 ## State Management
 
@@ -100,7 +100,7 @@ Read and update state in \`.tdd/state.json\`:
 When starting the workflow, create a todo list from all task files:
 
 \`\`\`
-1. Read all task files: ls tasks/TDD_*.md
+1. Read all task files: ls .context/tasks/TDD_*.md
 2. Create TodoWrite with all tasks:
    - status: "pending" for unstarted tasks
    - status: "completed" for tasks in state.completed_tasks
@@ -179,7 +179,7 @@ Report to user: "Task TDD_X blocked after 3 attempts"
 @.context/agent-spec.md
 
 ### Current Task
-@tasks/TDD_4.md
+@.context/tasks/TDD_4.md
 
 ### Workflow Status
 - Completed: TDD_1, TDD_2, TDD_3
@@ -204,7 +204,7 @@ Read existing code as needed - you have fresh context.
 @.context/agent-spec.md
 
 ### Task to Validate
-@tasks/TDD_4.md
+@.context/tasks/TDD_4.md
 
 ### Test Scope (from task file)
 must_pass:

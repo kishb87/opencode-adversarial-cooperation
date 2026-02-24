@@ -9,12 +9,12 @@ Start or resume the TDD workflow.
 !`cat .tdd/state.json 2>/dev/null || echo '{"workflow_phase": "not_started"}'`
 
 ## Task Files
-!`ls tasks/TDD_*.md 2>/dev/null | head -20 || echo "No task files found"`
+!`ls .context/tasks/TDD_*.md 2>/dev/null | head -20 || echo "No task files found"`
 
 ## Instructions
 
 1. Load the current state from `.tdd/state.json`
-2. **Create TodoWrite list** with all tasks from `tasks/` directory:
+2. **Create TodoWrite list** with all tasks from `.context/tasks/` directory:
    - Mark completed tasks as "completed" (from state.completed_tasks)
    - Mark current task as "in_progress" (from state.current_task)
    - Mark remaining tasks as "pending"
