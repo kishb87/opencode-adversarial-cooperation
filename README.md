@@ -32,16 +32,16 @@ OpenCode TDD provides a structured, agent-driven approach to Test-Driven Develop
 The system uses five specialized agents, each with a specific role:
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                        OPENCODE PLUS SYSTEM                       │
-│                                                                  │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌───────┐  ┌──────┐│
-│  │ARCHITECT │  │RESEARCHER│  │ACTOR     │  │CRITIC │  │ORCH. ││
-│  │          │  │          │  │          │  │       │  │      ││
-│  │Designs   │  │Fetches   │  │Implements│  │Reviews│  │Coord.││
-│  │Docs      │  │Tech Info │  │Features  │  │Work   │  │Flow  ││
-│  └──────────┘  └──────────┘  └──────────┘  └───────┘  └──────┘│
-└─────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────┐
+│                        OPENCODE PLUS SYSTEM                          │
+│                                                                      │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌───────┐  ┌────────────┐ │
+│  │ARCHITECT │  │RESEARCHER│  │ACTOR     │  │CRITIC │  │ORCHESTRATOR│ │
+│  │          │  │          │  │          │  │       │  │            │ │
+│  │Designs   │  │Fetches   │  │Implements│  │Reviews│  │Coordinate  │ │
+│  │Docs      │  │Tech Info │  │Features  │  │Work   │  │Flow        │ │
+│  └──────────┘  └──────────┘  └──────────┘  └───────┘  └────────────┘ │
+└──────────────────────────────────────────────────────────────────────┘
 ```
 
 ## The Agents
