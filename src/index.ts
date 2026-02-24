@@ -1,5 +1,5 @@
 /**
- * opencode-tdd - TDD Actor-Critic Workflow Plugin for OpenCode
+ * opencode-plus - TDD Actor-Critic Workflow Plugin for OpenCode
  *
  * This plugin provides a structured Test-Driven Development workflow
  * using an Actor-Critic multi-agent system.

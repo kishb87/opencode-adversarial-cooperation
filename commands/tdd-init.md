@@ -1,5 +1,5 @@
 ---
-description: Initialize TDD project structure with .context/, .tdd/, and opencode-tdd.json config
+description: Initialize TDD project structure with .context/, .tdd/, and opencode-plus.json config
 ---
 
 Initialize the TDD workflow for this project.
@@ -8,7 +8,7 @@ Use the `tdd_init` tool to create the project structure:
 - `.context/` - Foundational documents (PRD, spec, test spec, agent spec)
 - `.context/tasks/` - Individual TDD task files
 - `.tdd/` - Workflow state (gitignored)
-- `opencode-tdd.json` - Plugin config (model assignments, workflow settings)
+- `opencode-plus.json` - Plugin config (model assignments, workflow settings)
 
 ## Next Steps
 

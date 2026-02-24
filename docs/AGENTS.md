@@ -1,11 +1,11 @@
 # Agent Documentation
 
-This document describes the AI agents provided by opencode-tdd.
+This document describes the AI agents provided by opencode-plus.
 
 ## Architecture Overview
 
 ```
-opencode-tdd/
+opencode-plus/
 ├── src/
 │   ├── agents/           # Agent configurations
 │   │   ├── actor.ts      # TDD implementer

@@ -7,11 +7,11 @@ import type { PluginInput, ToolDefinition } from "@opencode-ai/plugin"
  * Initializes the TDD project structure:
  * - .context/ - Foundational documents (PRD, spec, test spec, agent spec, tasks)
  * - .tdd/ - Workflow state (gitignored)
- * - opencode-tdd.json - Plugin configuration
+ * - opencode-plus.json - Plugin configuration
  */
 export const tddInitTool = ($: PluginInput["$"], directory: any): ToolDefinition =>
   tool({
-    description: `Initialize TDD project structure with .context/, .tdd/, and opencode-tdd.json config.
+    description: `Initialize TDD project structure with .context/, .tdd/, and opencode-plus.json config.
 Creates initial state.json for workflow tracking.
 Safe to run multiple times - won't overwrite existing files.`,
     args: {
@@ -154,7 +154,7 @@ Run \`tdd_status\` to check current progress.`
 
         // Create config file if it doesn't exist
         try {
-          await $`test -f ${dir}/opencode-tdd.json`
+          await $`test -f ${dir}/opencode-plus.json`
         } catch {
           const configContent = {
             models: {
@@ -169,7 +169,7 @@ Run \`tdd_status\` to check current progress.`
               tasksDir: ".context/tasks",
             },
           }
-          await $`echo ${JSON.stringify(configContent, null, 2)} > ${dir}/opencode-tdd.json`
+          await $`echo ${JSON.stringify(configContent, null, 2)} > ${dir}/opencode-plus.json`
         }
 
         return `✅ TDD project initialized successfully!
@@ -191,7 +191,7 @@ ${dir}/
 ├── .tdd/
 │   ├── state.json      # Workflow state
 │   └── test-mapping.json
-├── opencode-tdd.json   # Plugin config (model overrides, etc.)
+├── opencode-plus.json  # Plugin config (model overrides, etc.)
 └── .gitignore          # Updated to ignore .tdd/
 \`\`\`
 
@@ -202,7 +202,7 @@ ${dir}/
 
 ## Configuration
 
-Edit \`opencode-tdd.json\` to customize:
+Edit \`opencode-plus.json\` to customize:
 - **Model assignments**: Uncomment and set model names for actor, critic, etc.
 - **Test command**: Override the default test command
 - **Workflow settings**: Adjust retries, auto-validate, etc.

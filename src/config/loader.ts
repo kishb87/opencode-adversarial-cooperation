@@ -6,9 +6,9 @@ import { TDDConfigSchema, type TDDConfig, defaultConfig } from "./schema"
  * Load TDD plugin configuration from various locations
  *
  * Search order (first found wins):
- * 1. {projectDir}/opencode-tdd.json
- * 2. {projectDir}/.opencode/opencode-tdd.json
- * 3. ~/.config/opencode/opencode-tdd.json
+ * 1. {projectDir}/opencode-plus.json
+ * 2. {projectDir}/.opencode/opencode-plus.json
+ * 3. ~/.config/opencode/opencode-plus.json
  * 4. Default config
  */
 export async function loadConfig(projectDir: any): Promise<TDDConfig> {
@@ -28,9 +28,9 @@ export async function loadConfig(projectDir: any): Promise<TDDConfig> {
   }
 
   const configPaths = [
-    join(dirPath, "opencode-tdd.json"),
-    join(dirPath, ".opencode", "opencode-tdd.json"),
-    join(process.env.HOME || "~", ".config", "opencode", "opencode-tdd.json"),
+    join(dirPath, "opencode-plus.json"),
+    join(dirPath, ".opencode", "opencode-plus.json"),
+    join(process.env.HOME || "~", ".config", "opencode", "opencode-plus.json"),
   ]
 
   for (const configPath of configPaths) {

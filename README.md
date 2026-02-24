@@ -1,10 +1,10 @@
 <div align="center">
-  <img src="./assets/banner.png" alt="OpenCode TDD Banner" width="100%">
+  <img src="./assets/banner.png" alt="OpenCode Plus Banner" width="100%">
 </div>
 
 <br>
 
-# OpenCode TDD
+# OpenCode Plus
 
 A comprehensive Test-Driven Development workflow system for [OpenCode](https://opencode.ai) that uses specialized AI agents to guide you from requirements to implementation.
 
@@ -33,7 +33,7 @@ The system uses five specialized agents, each with a specific role:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                         OPENCODE TDD SYSTEM                      │
+│                        OPENCODE PLUS SYSTEM                       │
 │                                                                  │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌───────┐  ┌──────┐│
 │  │ARCHITECT │  │RESEARCHER│  │ACTOR     │  │CRITIC │  │ORCH. ││
@@ -388,13 +388,13 @@ graph TD
 
 ```bash
 # Using bun (recommended)
-bun add opencode-tdd
+bun add opencode-plus
 
 # Using npm
-npm install opencode-tdd
+npm install opencode-plus
 
 # Using pnpm
-pnpm add opencode-tdd
+pnpm add opencode-plus
 ```
 
 ### Configure OpenCode
@@ -403,7 +403,7 @@ Add to your `opencode.json`:
 
 ```json
 {
-  "plugin": ["opencode-tdd"]
+  "plugin": ["opencode-plus"]
 }
 ```
 
@@ -732,7 +732,7 @@ export const authenticateJWT = async (req, res, next) => {
 
 ## Configuration
 
-Create `opencode-tdd.json` in your project root for custom configuration:
+Create `opencode-plus.json` in your project root for custom configuration:
 
 ```json
 {
@@ -1017,5 +1017,5 @@ MIT
 
 - [OpenCode Documentation](https://opencode.ai/docs)
 - [OpenCode Plugin Development](https://opencode.ai/docs/plugins/)
-- [GitHub Repository](https://github.com/yourusername/opencode-tdd)
-- [Issue Tracker](https://github.com/yourusername/opencode-tdd/issues)
+- [GitHub Repository](https://github.com/kishb87/opencode-plus)
+- [Issue Tracker](https://github.com/kishb87/opencode-plus/issues)

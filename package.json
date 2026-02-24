@@ -1,5 +1,5 @@
 {
-  "name": "opencode-tdd",
+  "name": "opencode-plus",
   "version": "0.1.0",
   "description": "TDD Actor-Critic workflow system for OpenCode - structured test-driven development with AI agents",
   "main": "dist/index.js",
@@ -42,12 +42,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/opencode-tdd"
+    "url": "https://github.com/kishb87/opencode-plus"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/opencode-tdd/issues"
+    "url": "https://github.com/kishb87/opencode-plus/issues"
   },
-  "homepage": "https://github.com/yourusername/opencode-tdd#readme",
+  "homepage": "https://github.com/kishb87/opencode-plus#readme",
   "peerDependencies": {
     "@opencode-ai/plugin": ">=1.0.0"
   },

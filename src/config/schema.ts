@@ -1,12 +1,12 @@
 import { z } from "zod"
 
 /**
- * Configuration schema for opencode-tdd plugin
+ * Configuration schema for opencode-plus plugin
  *
  * Users can customize via:
- * - opencode-tdd.json (project root)
- * - .opencode/opencode-tdd.json (project config dir)
- * - ~/.config/opencode/opencode-tdd.json (global)
+ * - opencode-plus.json (project root)
+ * - .opencode/opencode-plus.json (project config dir)
+ * - ~/.config/opencode/opencode-plus.json (global)
  */
 export const TDDConfigSchema = z.object({
   // =========================================
