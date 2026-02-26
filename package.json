@@ -1,6 +1,6 @@
 {
   "name": "opencode-plus",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "TDD Actor-Critic workflow system for OpenCode - structured test-driven development with AI agents",
   "type": "module",
   "main": "dist/index.js",
