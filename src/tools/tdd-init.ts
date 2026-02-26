@@ -158,11 +158,11 @@ Run \`tdd_status\` to check current progress.`
         } catch {
           const configContent = {
             models: {
-              // actor: "claude-3-opus",
-              // critic: "gpt-4",
-              // orchestrator: "claude-3-sonnet",
-              // architect: "claude-3-opus",
-              // researcher: "gpt-3.5-turbo",
+              actor: "anthropic/claude-sonnet-4-6",
+              critic: "anthropic/claude-opus-4-6",
+              orchestrator: "anthropic/claude-sonnet-4-6",
+              architect: "anthropic/claude-sonnet-4-6",
+              researcher: "anthropic/claude-sonnet-4-6",
             },
             workflow: {
               testCommand: testCommands[projectType],
