@@ -1,8 +1,9 @@
 /**
- * opencode-plus - TDD Actor-Critic Workflow Plugin for OpenCode
+ * opencode-adversarial-cooperation - Adversarial Cooperation Plugin for OpenCode
  *
- * This plugin provides a structured Test-Driven Development workflow
- * using an Actor-Critic multi-agent system.
+ * Based on Block AI Research's "Adversarial Cooperation in Code Synthesis" (Dec 2025),
+ * this plugin implements dialectical autocoding: a multi-agent TDD workflow where
+ * specialized Actor and Critic agents cooperate adversarially to produce validated code.
  *
  * Agents:
  * - @actor: Implements tasks following Red→Green→Refactor

@@ -1,7 +1,7 @@
 # Architecture Analysis: Agent Handoff Patterns
 
 **Date**: 2026-01-18
-**Purpose**: Analyze handoff mechanisms in opencode-handoff and opencode-ralph-wiggum, compare to our opencode-plus implementation, and make architectural recommendations.
+**Purpose**: Analyze handoff mechanisms in opencode-handoff and opencode-ralph-wiggum, compare to our opencode-adversarial-cooperation implementation, and make architectural recommendations.
 
 ---
 
@@ -28,7 +28,7 @@ After analyzing both plugins, **our current architecture is sound and aligns wit
 | **Agent Communication** | Multi-channel (refs, files, prompts) | None (filesystem IS state) | Orchestrator mediates via prompts |
 | **Complexity** | Medium (synthetic parts, hooks) | Simple (for loop + git) | Medium (orchestrator + subagents) |
 
-*Note: opencode-tdd has been renamed to opencode-plus.*
+*Note: opencode-tdd was renamed to opencode-plus, then to opencode-adversarial-cooperation.*
 
 ---
 
@@ -148,7 +148,7 @@ This is described as solving the "malloc/free problem" - treating context window
 
 ---
 
-## 3. Our Current Implementation (opencode-plus)
+## 3. Our Current Implementation (opencode-adversarial-cooperation)
 
 ### What We Do
 Implement a **TDD Actor-Critic workflow** where:

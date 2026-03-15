@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to opencode-plus will be documented here.
+All notable changes to opencode-adversarial-cooperation will be documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] - 2026-02-24
 
 ### Added
-- Initial release of opencode-plus
+- Initial release of opencode-adversarial-cooperation (formerly opencode-plus)
 - Actor agent — TDD implementer following Red→Green→Refactor
 - Critic agent — independent validator with binary APPROVED/NOT APPROVED verdict
 - Orchestrator agent — coordinates Actor-Critic workflow with retry logic

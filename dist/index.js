@@ -7,7 +7,7 @@ tool.schema = z;
 
 // src/tools/tdd-init.ts
 var tddInitTool = ($, directory) => tool({
-  description: `Initialize TDD project structure with .context/, .tdd/, and opencode-plus.json config.
+  description: `Initialize TDD project structure with .context/, .tdd/, and opencode-adversarial-cooperation.json config.
 Creates initial state.json for workflow tracking.
 Safe to run multiple times - won't overwrite existing files.`,
   args: {
@@ -106,7 +106,7 @@ Run \`tdd_status\` to check current progress.`;
         await $`echo ${researchTOC} > ${dir}/.context/research/TOC.md`;
       }
       try {
-        await $`test -f ${dir}/opencode-plus.json`;
+        await $`test -f ${dir}/opencode-adversarial-cooperation.json`;
       } catch {
         const configContent = {
           models: {
@@ -119,12 +119,9 @@ Run \`tdd_status\` to check current progress.`;
           workflow: {
             testCommand: testCommands[projectType],
             tasksDir: ".context/tasks"
-          },
-          mcp: {
-            brightdata: true
           }
         };
-        await $`echo ${JSON.stringify(configContent, null, 2)} > ${dir}/opencode-plus.json`;
+        await $`echo ${JSON.stringify(configContent, null, 2)} > ${dir}/opencode-adversarial-cooperation.json`;
       }
       return `\u2705 TDD project initialized successfully!
 
@@ -145,7 +142,7 @@ ${dir}/
 \u251C\u2500\u2500 .tdd/
 \u2502   \u251C\u2500\u2500 state.json      # Workflow state
 \u2502   \u2514\u2500\u2500 test-mapping.json
-\u251C\u2500\u2500 opencode-plus.json  # Plugin config (model overrides, etc.)
+\u251C\u2500\u2500 opencode-adversarial-cooperation.json  # Plugin config (model overrides, etc.)
 \u2514\u2500\u2500 .gitignore          # Updated to ignore .tdd/
 \`\`\`
 
@@ -156,7 +153,7 @@ ${dir}/
 
 ## Configuration
 
-Edit \`opencode-plus.json\` to customize:
+Edit \`opencode-adversarial-cooperation.json\` to customize:
 - **Model assignments**: Uncomment and set model names for actor, critic, etc.
 - **Test command**: Override the default test command
 - **Workflow settings**: Adjust retries, auto-validate, etc.
@@ -237,34 +234,6 @@ var FeaturesSchema = z2.object({
   /** Inject TDD context into session compaction */
   compactionContext: z2.boolean().default(true)
 });
-var McpSchema = z2.object({
-  /**
-   * Controls whether Bright Data MCP tools are enabled for all TDD agents
-   * (orchestrator, actor, critic).
-   *
-   * - `true` (default): the glob pattern `brightdata_*` is added to each
-   *   agent's tool list.  If the Bright Data MCP server is NOT installed in
-   *   OpenCode, the pattern simply matches nothing and no error is thrown.
-   * - `false`: the glob pattern is omitted entirely so no Bright Data tools
-   *   are visible to any agent.
-   *
-   * To install the Bright Data MCP server, add the following to your
-   * opencode.json (or ~/.config/opencode/opencode.json):
-   *
-   * ```json
-   * "mcp": {
-   *   "brightdata": {
-   *     "type": "local",
-   *     "command": ["npx", "-y", "@brightdata/mcp"],
-   *     "environment": {
-   *       "API_TOKEN": "<your-brightdata-api-token>"
-   *     }
-   *   }
-   * }
-   * ```
-   */
-  brightdata: z2.boolean().optional()
-});
 var PromptsSchema = z2.object({
   /** Additional instructions appended to Actor prompt */
   actorAppend: z2.string().optional(),
@@ -297,19 +266,14 @@ var TDDConfigSchema = z2.object({
   // =========================================
   // AGENT PROMPT CUSTOMIZATION
   // =========================================
-  prompts: PromptsSchema.optional(),
-  // =========================================
-  // MCP SERVER INTEGRATION
-  // =========================================
-  mcp: McpSchema.optional()
+  prompts: PromptsSchema.optional()
 });
 var defaultConfig = {
   models: ModelsSchema.parse({}),
   workflow: WorkflowSchema.parse({}),
   documents: DocumentsSchema.parse({}),
   features: FeaturesSchema.parse({}),
-  prompts: PromptsSchema.parse({}),
-  mcp: McpSchema.parse({})
+  prompts: PromptsSchema.parse({})
 };
 function parseConfig(raw) {
   const parsed = TDDConfigSchema.parse(raw);
@@ -318,8 +282,7 @@ function parseConfig(raw) {
     workflow: WorkflowSchema.parse(parsed.workflow ?? {}),
     documents: DocumentsSchema.parse(parsed.documents ?? {}),
     features: FeaturesSchema.parse(parsed.features ?? {}),
-    prompts: PromptsSchema.parse(parsed.prompts ?? {}),
-    mcp: McpSchema.parse(parsed.mcp ?? {})
+    prompts: PromptsSchema.parse(parsed.prompts ?? {})
   };
 }
 
@@ -336,9 +299,9 @@ async function loadConfig(projectDir) {
     dirPath = process.cwd();
   }
   const configPaths = [
-    join(dirPath, "opencode-plus.json"),
-    join(dirPath, ".opencode", "opencode-plus.json"),
-    join(process.env.HOME || "~", ".config", "opencode", "opencode-plus.json")
+    join(dirPath, "opencode-adversarial-cooperation.json"),
+    join(dirPath, ".opencode", "opencode-adversarial-cooperation.json"),
+    join(process.env.HOME || "~", ".config", "opencode", "opencode-adversarial-cooperation.json")
   ];
   for (const configPath of configPaths) {
     try {
@@ -740,14 +703,7 @@ var actorAgent = (config) => ({
   model: config.models?.actor,
   // undefined = use session model
   temperature: 0.4,
-  tools: {
-    bash: true,
-    write: true,
-    edit: true,
-    read: true,
-    // Bright Data MCP tools (no-op if MCP not installed)
-    "brightdata_*": config.mcp?.brightdata !== false
-  },
+  // No tools restriction -- inherits all available tools (built-in + MCP)
   permission: {
     bash: "allow",
     edit: "allow"
@@ -1061,13 +1017,10 @@ var criticAgent = (config) => ({
   model: config.models?.critic,
   // undefined = use session model
   temperature: 0.1,
+  // Critic is read-only: deny write/edit, inherit everything else (built-in + MCP)
   tools: {
-    bash: true,
     write: false,
-    edit: false,
-    read: true,
-    // Bright Data MCP tools (no-op if MCP not installed)
-    "brightdata_*": config.mcp?.brightdata !== false
+    edit: false
   },
   permission: {
     bash: "allow",
@@ -1333,15 +1286,7 @@ var orchestratorAgent = (config) => ({
   model: config.models?.orchestrator,
   // undefined = use session model
   temperature: 0.2,
-  tools: {
-    bash: true,
-    write: true,
-    edit: true,
-    read: true,
-    todo: true,
-    // Bright Data MCP tools (no-op if MCP not installed)
-    "brightdata_*": config.mcp?.brightdata !== false
-  },
+  // No tools restriction -- inherits all available tools (built-in + MCP)
   permission: {
     bash: "allow",
     edit: "allow"
@@ -1667,12 +1612,7 @@ var architectAgent = (config) => ({
   model: config.models?.architect,
   // undefined = use session model
   temperature: 0.3,
-  tools: {
-    bash: true,
-    write: true,
-    edit: true,
-    read: true
-  },
+  // No tools restriction -- inherits all available tools (built-in + MCP)
   permission: {
     bash: "allow",
     edit: "allow"
@@ -2998,20 +2938,15 @@ var researcherAgent = (config) => ({
   // Session model by default
   temperature: 0.1,
   // Very low - just fetching facts
+  // Researcher is read-only: deny write/edit, inherit everything else (built-in + MCP)
+  // This allows use of webfetch, Context7, Bright Data, or any other MCP tools available
   tools: {
-    bash: false,
-    // No command execution
     write: false,
-    // Read-only agent
-    edit: false,
-    read: true,
-    // Can read existing files for context
-    grep: true,
-    // Can search codebase
-    glob: true
-    // Can find files
+    edit: false
   },
-  permission: {},
+  permission: {
+    edit: "deny"
+  },
   prompt: `You are the Researcher agent - a LIGHTWEIGHT DATA FETCHER.
 
 ## Your Role

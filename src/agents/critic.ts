@@ -19,13 +19,10 @@ export const criticAgent = (config: TDDConfig) => ({
   mode: "subagent" as const,
   model: config.models?.critic, // undefined = use session model
   temperature: 0.1,
+  // Critic is read-only: deny write/edit, inherit everything else (built-in + MCP)
   tools: {
-    bash: true,
     write: false,
     edit: false,
-    read: true,
-    // Bright Data MCP tools (no-op if MCP not installed)
-    "brightdata_*": config.mcp?.brightdata !== false,
   },
   permission: {
     bash: "allow" as const,

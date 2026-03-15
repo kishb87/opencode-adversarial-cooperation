@@ -1,12 +1,12 @@
 import { z } from "zod"
 
 /**
- * Configuration schema for opencode-plus plugin
+ * Configuration schema for opencode-adversarial-cooperation plugin
  *
  * Users can customize via:
- * - opencode-plus.json (project root)
- * - .opencode/opencode-plus.json (project config dir)
- * - ~/.config/opencode/opencode-plus.json (global)
+ * - opencode-adversarial-cooperation.json (project root)
+ * - .opencode/opencode-adversarial-cooperation.json (project config dir)
+ * - ~/.config/opencode/opencode-adversarial-cooperation.json (global)
  */
 
 const ModelsSchema = z.object({
@@ -61,35 +61,6 @@ const FeaturesSchema = z.object({
   compactionContext: z.boolean().default(true),
 })
 
-const McpSchema = z.object({
-  /**
-   * Controls whether Bright Data MCP tools are enabled for all TDD agents
-   * (orchestrator, actor, critic).
-   *
-   * - `true` (default): the glob pattern `brightdata_*` is added to each
-   *   agent's tool list.  If the Bright Data MCP server is NOT installed in
-   *   OpenCode, the pattern simply matches nothing and no error is thrown.
-   * - `false`: the glob pattern is omitted entirely so no Bright Data tools
-   *   are visible to any agent.
-   *
-   * To install the Bright Data MCP server, add the following to your
-   * opencode.json (or ~/.config/opencode/opencode.json):
-   *
-   * ```json
-   * "mcp": {
-   *   "brightdata": {
-   *     "type": "local",
-   *     "command": ["npx", "-y", "@brightdata/mcp"],
-   *     "environment": {
-   *       "API_TOKEN": "<your-brightdata-api-token>"
-   *     }
-   *   }
-   * }
-   * ```
-   */
-  brightdata: z.boolean().optional(),
-})
-
 const PromptsSchema = z.object({
   /** Additional instructions appended to Actor prompt */
   actorAppend: z.string().optional(),
@@ -128,11 +99,6 @@ export const TDDConfigSchema = z.object({
   // AGENT PROMPT CUSTOMIZATION
   // =========================================
   prompts: PromptsSchema.optional(),
-
-  // =========================================
-  // MCP SERVER INTEGRATION
-  // =========================================
-  mcp: McpSchema.optional(),
 })
 
 export type TDDConfig = {
@@ -141,7 +107,6 @@ export type TDDConfig = {
   documents: z.infer<typeof DocumentsSchema>
   features: z.infer<typeof FeaturesSchema>
   prompts: z.infer<typeof PromptsSchema>
-  mcp: z.infer<typeof McpSchema>
 }
 
 /**
@@ -153,7 +118,6 @@ export const defaultConfig: TDDConfig = {
   documents: DocumentsSchema.parse({}),
   features: FeaturesSchema.parse({}),
   prompts: PromptsSchema.parse({}),
-  mcp: McpSchema.parse({}),
 }
 
 /**
@@ -167,6 +131,5 @@ export function parseConfig(raw: unknown): TDDConfig {
     documents: DocumentsSchema.parse(parsed.documents ?? {}),
     features: FeaturesSchema.parse(parsed.features ?? {}),
     prompts: PromptsSchema.parse(parsed.prompts ?? {}),
-    mcp: McpSchema.parse(parsed.mcp ?? {}),
   }
 }

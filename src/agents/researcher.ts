@@ -18,15 +18,15 @@ export const researcherAgent = (config: TDDConfig) => ({
   mode: "subagent" as const,
   model: config.models?.researcher, // Session model by default
   temperature: 0.1, // Very low - just fetching facts
+  // Researcher is read-only: deny write/edit, inherit everything else (built-in + MCP)
+  // This allows use of webfetch, Context7, Bright Data, or any other MCP tools available
   tools: {
-    bash: false,  // No command execution
-    write: false, // Read-only agent
+    write: false,
     edit: false,
-    read: true,   // Can read existing files for context
-    grep: true,   // Can search codebase
-    glob: true,   // Can find files
   },
-  permission: {},
+  permission: {
+    edit: "deny" as const,
+  },
   prompt: `You are the Researcher agent - a LIGHTWEIGHT DATA FETCHER.
 
 ## Your Role

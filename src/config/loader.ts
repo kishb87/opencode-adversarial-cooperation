@@ -6,9 +6,9 @@ import { parseConfig, type TDDConfig, defaultConfig } from "./schema"
  * Load TDD plugin configuration from various locations
  *
  * Search order (first found wins):
- * 1. {projectDir}/opencode-plus.json
- * 2. {projectDir}/.opencode/opencode-plus.json
- * 3. ~/.config/opencode/opencode-plus.json
+ * 1. {projectDir}/opencode-adversarial-cooperation.json
+ * 2. {projectDir}/.opencode/opencode-adversarial-cooperation.json
+ * 3. ~/.config/opencode/opencode-adversarial-cooperation.json
  * 4. Default config
  */
 export async function loadConfig(projectDir: any): Promise<TDDConfig> {
@@ -28,9 +28,9 @@ export async function loadConfig(projectDir: any): Promise<TDDConfig> {
   }
 
   const configPaths = [
-    join(dirPath, "opencode-plus.json"),
-    join(dirPath, ".opencode", "opencode-plus.json"),
-    join(process.env.HOME || "~", ".config", "opencode", "opencode-plus.json"),
+    join(dirPath, "opencode-adversarial-cooperation.json"),
+    join(dirPath, ".opencode", "opencode-adversarial-cooperation.json"),
+    join(process.env.HOME || "~", ".config", "opencode", "opencode-adversarial-cooperation.json"),
   ]
 
   for (const configPath of configPaths) {
@@ -61,7 +61,6 @@ export function mergeConfig(
     documents: { ...base.documents, ...override.documents },
     features: { ...base.features, ...override.features },
     prompts: { ...base.prompts, ...override.prompts },
-    mcp: { ...base.mcp, ...override.mcp },
   }
 }
 

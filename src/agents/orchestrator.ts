@@ -19,15 +19,7 @@ export const orchestratorAgent = (config: TDDConfig) => ({
   mode: "primary" as const,
   model: config.models?.orchestrator, // undefined = use session model
   temperature: 0.2,
-  tools: {
-    bash: true,
-    write: true,
-    edit: true,
-    read: true,
-    todo: true,
-    // Bright Data MCP tools (no-op if MCP not installed)
-    "brightdata_*": config.mcp?.brightdata !== false,
-  },
+  // No tools restriction -- inherits all available tools (built-in + MCP)
   permission: {
     bash: "allow" as const,
     edit: "allow" as const,

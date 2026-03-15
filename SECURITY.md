@@ -10,7 +10,7 @@
 
 **Please do not report security vulnerabilities through public GitHub issues.**
 
-To report a vulnerability, open a [GitHub Security Advisory](https://github.com/kishb87/opencode-plus/security/advisories/new) on this repository.
+To report a vulnerability, open a [GitHub Security Advisory](https://github.com/kishb87/opencode-adversarial-cooperation/security/advisories/new) on this repository.
 
 Include:
 - A description of the vulnerability

@@ -1,12 +1,12 @@
-# Contributing to opencode-plus
+# Contributing to opencode-adversarial-cooperation
 
 Thanks for your interest in contributing!
 
 ## Getting Started
 
 ```bash
-git clone https://github.com/kishb87/opencode-plus.git
-cd opencode-plus
+git clone https://github.com/kishb87/opencode-adversarial-cooperation.git
+cd opencode-adversarial-cooperation
 npm install
 npm run build
 ```
@@ -30,7 +30,7 @@ To test changes in OpenCode locally:
 
 ```bash
 # Create symlink so OpenCode loads your local build
-ln -sf $(pwd)/plugin.ts ~/.config/opencode/plugin/opencode-plus.ts
+ln -sf $(pwd)/plugin.ts ~/.config/opencode/plugin/opencode-adversarial-cooperation.ts
 ln -sf $(pwd)/commands ~/.config/opencode/command/tdd
 
 # After making changes, rebuild and restart OpenCode

@@ -20,12 +20,7 @@ export const architectAgent = (config: TDDConfig) => ({
   mode: "primary" as const,
   model: config.models?.architect, // undefined = use session model
   temperature: 0.3,
-  tools: {
-    bash: true,
-    write: true,
-    edit: true,
-    read: true,
-  },
+  // No tools restriction -- inherits all available tools (built-in + MCP)
   permission: {
     bash: "allow" as const,
     edit: "allow" as const,

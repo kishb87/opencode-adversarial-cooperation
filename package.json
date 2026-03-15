@@ -1,7 +1,7 @@
 {
-  "name": "opencode-plus",
+  "name": "opencode-adversarial-cooperation",
   "version": "0.1.5",
-  "description": "TDD Actor-Critic workflow system for OpenCode - structured test-driven development with AI agents",
+  "description": "Adversarial cooperation plugin for OpenCode - dialectical Actor-Critic TDD workflow based on Block AI research",
   "type": "module",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -31,13 +31,13 @@
   "keywords": [
     "opencode",
     "opencode-plugin",
+    "adversarial-cooperation",
+    "dialectical-autocoding",
     "tdd",
     "test-driven-development",
-    "testing",
-    "ai-agents",
     "actor-critic",
-    "code-generation",
-    "workflow"
+    "ai-agents",
+    "code-synthesis"
   ],
   "author": "kishb87",
   "license": "MIT",
@@ -49,12 +49,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kishb87/opencode-plus"
+    "url": "https://github.com/kishb87/opencode-adversarial-cooperation"
   },
   "bugs": {
-    "url": "https://github.com/kishb87/opencode-plus/issues"
+    "url": "https://github.com/kishb87/opencode-adversarial-cooperation/issues"
   },
-  "homepage": "https://github.com/kishb87/opencode-plus#readme",
+  "homepage": "https://github.com/kishb87/opencode-adversarial-cooperation#readme",
   "peerDependencies": {
     "@opencode-ai/plugin": ">=1.0.0"
   },

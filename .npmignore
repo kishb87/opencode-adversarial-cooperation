@@ -17,7 +17,7 @@ docs/
 # Local config
 .env
 .env.*
-opencode-plus.json
+opencode-adversarial-cooperation.json
 
 # Editor
 .vscode/
