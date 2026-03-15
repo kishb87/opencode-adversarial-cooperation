@@ -1,6 +1,6 @@
 {
   "name": "opencode-adversarial-cooperation",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Adversarial cooperation plugin for OpenCode - dialectical Actor-Critic TDD workflow based on Block AI research",
   "type": "module",
   "main": "dist/index.js",
